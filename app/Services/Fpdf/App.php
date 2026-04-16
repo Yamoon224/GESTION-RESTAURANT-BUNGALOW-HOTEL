@@ -20,7 +20,7 @@ class App extends Fpdf
         // Numéro de page
         $this->SetX(0);
         $this->SetFont('Arial', 'I', 6);
-        $this->Cell(80, 3, utf8_decode("Yamoussoukro, Côte d'Ivoire"), '', 1, 'C');
+        $this->Cell(80, 3, "Yamoussoukro, C\xf4te d'Ivoire", '', 1, 'C');
         $this->SetX(0);
         $this->Cell(80, 3, utf8_decode("2730610871 - direction@bungalowshotel.net - www.bungalowshotel.net"), '', 1, 'C');
     }
@@ -48,13 +48,20 @@ class App extends Fpdf
         $usable = 76;
 
         // ===== EN-TÊTE =====
+        $logoPath = public_path('images/logo.png');
+        if (file_exists($logoPath)) {
+            $logoW = 28;
+            $this->Image($logoPath, (80 - $logoW) / 2, $this->GetY(), $logoW, $logoW, 'PNG');
+            $this->Ln($logoW + 2);
+        }
+
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 13);
         $this->Cell($usable, 8, utf8_decode('BUNGALOWS HOTEL'), 0, 1, 'C');
 
         $this->SetX(2);
         $this->SetFont('Arial', '', 8);
-        $this->Cell($usable, 5, utf8_decode("Yamoussoukro, C\xf4te d'Ivoire"), 0, 1, 'C');
+        $this->Cell($usable, 5, "Yamoussoukro, C\xf4te d'Ivoire", 0, 1, 'C');
 
         $this->SetX(2);
         $this->Cell($usable, 5, utf8_decode('Tel: 2730610871'), 0, 1, 'C');
