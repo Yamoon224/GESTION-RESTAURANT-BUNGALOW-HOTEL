@@ -51,7 +51,7 @@ class App extends Fpdf
         $this->Ln();
 
         
-        $this->setFont('Arial', '', 7);
+        $this->setFont('Arial', '', 8);
         // Data
         foreach($data as $key => $row)
         {
@@ -87,7 +87,7 @@ class App extends Fpdf
         $this->Ln();
 
         
-        $this->setFont('Arial', '', 7);
+        $this->setFont('Arial', '', 8);
         // Data
         foreach($data as $key => $row)
         {
@@ -104,16 +104,16 @@ class App extends Fpdf
         foreach($others as $item)
         {
             $this->setX(2);
-            $this->setFont('Arial', 'B', 7);
+            $this->setFont('Arial', 'B', 8);
             $this->cell(15, 6, utf8_decode($item[0]), '', 0, 'R');
 
-            $this->setFont('Arial', 'I', 7);
+            $this->setFont('Arial', 'I', 8);
             $this->cell(25, 6, utf8_decode($item[1]), !empty($item[1]) ? 'LRTB' : '', 0, 'R');
 
-            $this->setFont('Arial', 'B', 7);
+            $this->setFont('Arial', 'B', 8);
             $this->cell(18, 6, utf8_decode($item[2]), '', 0, 'R');
             
-            $this->setFont('Arial', 'I', 7);
+            $this->setFont('Arial', 'I', 8);
             $this->cell(18, 6, utf8_decode($item[3]), 'LRTB', 0, 'R');
             $this->Ln();
         }
@@ -126,10 +126,10 @@ class App extends Fpdf
         foreach($data as $item)
         {
             $this->setX(4);
-            $this->setFont('Arial', 'IB', 8);
+            $this->setFont('Arial', 'IB', 9);
             $this->cell(30, 6, utf8_decode($item[0]), '', 0, 'L');
             
-            $this->setFont('Arial', 'I', 8);
+            $this->setFont('Arial', 'I', 9);
             $this->cell(42, 6, utf8_decode($item[1]), !empty($item[1]) ? 'LRTB' : '', 0, 'R');
             $this->Ln();
         }
