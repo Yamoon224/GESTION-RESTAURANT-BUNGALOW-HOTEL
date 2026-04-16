@@ -27,29 +27,29 @@ class PdfController extends Controller
 
         $this->pdf->setX(4);
         $this->pdf->setFillColor(255, 193, 7);
-        $this->pdf->setFont('Arial', 'B', 10);
+        $this->pdf->setFont('Arial', 'B', 12);
         
         $this->pdf->setX(2);
-        $this->pdf->cell(15, 7, utf8_decode("Caisse"), '', 0, 'L');
-        $this->pdf->setFont('Arial', '', 10);
-        $this->pdf->cell(43, 7, utf8_decode($order->creator->firstname.' '.$order->creator->name), 'LR', 0, 'L');
-        $this->pdf->cell(18, 7, utf8_decode("CASH"), 'LR', 1, 'C');
+        $this->pdf->cell(15, 8, utf8_decode("Caisse"), '1', 0, 'L');
+        $this->pdf->setFont('Arial', '', 12);
+        $this->pdf->cell(43, 8, utf8_decode($order->creator->firstname.' '.$order->creator->name), '1', 0, 'L');
+        $this->pdf->cell(18, 8, utf8_decode("CASH"), '1', 1, 'C');
 
         $this->pdf->setX(2);
-        $this->pdf->cell(15, 7, utf8_decode("Client"), '', 0, 'L');
-        $this->pdf->setFont('Arial', '', 10);
-        $this->pdf->cell(61, 7, utf8_decode('CL DIVERS'), 'LRB', 1, 'L');
+        $this->pdf->cell(15, 8, utf8_decode("Client"), '1', 0, 'L');
+        $this->pdf->setFont('Arial', '', 12);
+        $this->pdf->cell(61, 8, utf8_decode('CL DIVERS'), '1', 1, 'L');
 
         $this->pdf->ln(4);
         $this->pdf->setX(2);
-        $this->pdf->setFont('Arial', 'I', 9);
-        $this->pdf->cell(40, 6, utf8_decode("Le ".date('d/m/Y  à  H:i:s', strtotime($order->created_at))), '', 0, 'L');
-        $this->pdf->setFont('Arial', 'IB', 9);
-        $this->pdf->cell(30, 6, utf8_decode("N A : ".$order->order_details->count()), '', 0, 'R');
+        $this->pdf->setFont('Arial', 'I', 11);
+        $this->pdf->cell(40, 7, utf8_decode("Le ".date('d/m/Y  à  H:i:s', strtotime($order->created_at))), '', 0, 'L');
+        $this->pdf->setFont('Arial', 'IB', 11);
+        $this->pdf->cell(30, 7, utf8_decode("N A : ".$order->order_details->count()), '', 0, 'R');
 
-        $this->pdf->ln(6);
+        $this->pdf->ln(7);
         $this->pdf->setX(2);
-        $this->pdf->setFont('Arial', 'B', 10);
+        $this->pdf->setFont('Arial', 'B', 12);
         $data = OrderDetail::with('product')->where('order_id', $order->id)->get()->toArray();
         if($type == 'bill') 
         {
@@ -92,26 +92,26 @@ class PdfController extends Controller
         $this->pdf->addPage();
 
         $this->pdf->setX(4);
-        $this->pdf->setFont('Arial', 'B', 10);
-        $this->pdf->cell(15, 7, utf8_decode("Caissière"), '', 0, 'L');
-        $this->pdf->setFont('Arial', 'I', 10);
-        $this->pdf->cell(61, 7, utf8_decode(auth()->user()->firstname.' '.auth()->user()->name), '', 1, 'L');
+        $this->pdf->setFont('Arial', 'B', 12);
+        $this->pdf->cell(15, 8, utf8_decode("Caissière"), '', 0, 'L');
+        $this->pdf->setFont('Arial', 'I', 12);
+        $this->pdf->cell(61, 8, utf8_decode(auth()->user()->firstname.' '.auth()->user()->name), '', 1, 'L');
 
         $this->pdf->setX(4);
-        $this->pdf->setFont('Arial', 'B', 10);
-        $this->pdf->cell(20, 7, utf8_decode("Date Début: "), '', 0, 'L');
-        $this->pdf->setFont('Arial', 'I', 10);
-        $this->pdf->cell(61, 7, utf8_decode(date('d/m/Y H:i:s', strtotime($request->start))), '', 1, 'C');
+        $this->pdf->setFont('Arial', 'B', 12);
+        $this->pdf->cell(20, 8, utf8_decode("Date Début: "), '', 0, 'L');
+        $this->pdf->setFont('Arial', 'I', 12);
+        $this->pdf->cell(61, 8, utf8_decode(date('d/m/Y H:i:s', strtotime($request->start))), '', 1, 'C');
         $this->pdf->setX(4);
-        $this->pdf->setFont('Arial', 'B', 10);
-        $this->pdf->cell(20, 7, utf8_decode("Date Fin: "), '', 0, 'L');
-        $this->pdf->setFont('Arial', 'I', 10);
-        $this->pdf->cell(61, 7, utf8_decode(date('d/m/Y H:i:s', strtotime($request->end))), '', 1, 'C');
+        $this->pdf->setFont('Arial', 'B', 12);
+        $this->pdf->cell(20, 8, utf8_decode("Date Fin: "), '', 0, 'L');
+        $this->pdf->setFont('Arial', 'I', 12);
+        $this->pdf->cell(61, 8, utf8_decode(date('d/m/Y H:i:s', strtotime($request->end))), '', 1, 'C');
 
 
         $this->pdf->ln(2);
         $this->pdf->setX(4);
-        $this->pdf->setFont('Arial', 'B', 10);
+        $this->pdf->setFont('Arial', 'B', 12);
         $this->pdf->dailyreport(
             [
                 ['Remise ', moneyFormat(0)], 

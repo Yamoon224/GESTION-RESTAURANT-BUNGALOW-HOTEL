@@ -46,31 +46,30 @@ class App extends Fpdf
         $width = [32, 18, 8, 18];
         
         // Headers
-        $this->setFont('Arial', 'B', 10);
+        $this->setFont('Arial', 'B', 12);
         for($i = 0; $i < count($header); $i++)
-            $this->cell($width[$i], 7, utf8_decode($header[$i]), '1', 0, 'C');
+            $this->cell($width[$i], 8, utf8_decode($header[$i]), '1', 0, 'C');
         $this->Ln();
 
-        
-        $this->setFont('Arial', '', 9);
+        $this->setFont('Arial', '', 11);
         // Data
         foreach($data as $key => $row)
         {
             $this->setX(2);
-            $this->cell($width[0], 7, utf8_decode($row['product']['name']), '1', 0, 'C');
-            $this->cell($width[1], 7, utf8_decode(moneyFormat($row['price'])), '1', 0, 'C');
-            $this->cell($width[2], 7, utf8_decode($row['qty']), '1', 0, 'C');
-            $this->cell($width[3], 7, utf8_decode(moneyFormat($row['amount'])), '1', 0, 'C');
+            $this->cell($width[0], 8, utf8_decode($row['product']['name']), '1', 0, 'C');
+            $this->cell($width[1], 8, utf8_decode(moneyFormat($row['price'])), '1', 0, 'C');
+            $this->cell($width[2], 8, utf8_decode($row['qty']), '1', 0, 'C');
+            $this->cell($width[3], 8, utf8_decode(moneyFormat($row['amount'])), '1', 0, 'C');
             $this->Ln();
         }
         $this->Ln(2);
         foreach($others as $key => $item)
         {
             $this->setX(22);
-            $this->setFont('Arial', 'B', 9);
-            $this->cell(25, 7, utf8_decode($key), '1', 0, 'R');
-            $this->setFont('Arial', '', 9);
-            $this->cell(31, 7, utf8_decode($item), '1', 0, 'R');
+            $this->setFont('Arial', 'B', 11);
+            $this->cell(25, 8, utf8_decode($key), '1', 0, 'R');
+            $this->setFont('Arial', '', 11);
+            $this->cell(31, 8, utf8_decode($item), '1', 0, 'R');
             $this->Ln();
         }
         $this->setX(22);
@@ -83,38 +82,37 @@ class App extends Fpdf
         $width = [32, 18, 8, 18];
         
         // Headers
-        $this->setFont('Arial', 'B', 10);
+        $this->setFont('Arial', 'B', 12);
         for($i = 0; $i < count($header); $i++)
-            $this->cell($width[$i], 7, utf8_decode($header[$i]), '1', 0, 'C');
+            $this->cell($width[$i], 8, utf8_decode($header[$i]), '1', 0, 'C');
         $this->Ln();
 
-        
-        $this->setFont('Arial', '', 9);
+        $this->setFont('Arial', '', 11);
         // Data
         foreach($data as $key => $row)
         {
             $this->setX(2);
-            $this->cell($width[0], 7, utf8_decode($row['product']['name']), '1', 0, 'C');
-            $this->cell($width[1], 7, utf8_decode(moneyFormat($row['price'])), '1', 0, 'C');
-            $this->cell($width[2], 7, utf8_decode($row['qty']), '1', 0, 'C');
-            $this->cell($width[3], 7, utf8_decode(moneyFormat($row['amount'])), '1', 0, 'C');
+            $this->cell($width[0], 8, utf8_decode($row['product']['name']), '1', 0, 'C');
+            $this->cell($width[1], 8, utf8_decode(moneyFormat($row['price'])), '1', 0, 'C');
+            $this->cell($width[2], 8, utf8_decode($row['qty']), '1', 0, 'C');
+            $this->cell($width[3], 8, utf8_decode(moneyFormat($row['amount'])), '1', 0, 'C');
             $this->Ln();
         }
         $this->Ln(2);
         foreach($others as $item)
         {
             $this->setX(2);
-            $this->setFont('Arial', 'B', 9);
-            $this->cell(15, 7, utf8_decode($item[0]), '1', 0, 'R');
+            $this->setFont('Arial', 'B', 11);
+            $this->cell(15, 8, utf8_decode($item[0]), '1', 0, 'R');
 
-            $this->setFont('Arial', 'I', 9);
-            $this->cell(25, 7, utf8_decode($item[1]), '1', 0, 'R');
+            $this->setFont('Arial', 'I', 11);
+            $this->cell(25, 8, utf8_decode($item[1]), '1', 0, 'R');
 
-            $this->setFont('Arial', 'B', 9);
-            $this->cell(18, 7, utf8_decode($item[2]), '1', 0, 'R');
+            $this->setFont('Arial', 'B', 11);
+            $this->cell(18, 8, utf8_decode($item[2]), '1', 0, 'R');
             
-            $this->setFont('Arial', 'I', 9);
-            $this->cell(18, 7, utf8_decode($item[3]), '1', 0, 'R');
+            $this->setFont('Arial', 'I', 11);
+            $this->cell(18, 8, utf8_decode($item[3]), '1', 0, 'R');
             $this->Ln();
         }
         $this->setX(22);
@@ -126,11 +124,11 @@ class App extends Fpdf
         foreach($data as $item)
         {
             $this->setX(4);
-            $this->setFont('Arial', 'IB', 10);
-            $this->cell(30, 7, utf8_decode($item[0]), '1', 0, 'L');
+            $this->setFont('Arial', 'IB', 12);
+            $this->cell(30, 8, utf8_decode($item[0]), '1', 0, 'L');
             
-            $this->setFont('Arial', 'I', 10);
-            $this->cell(42, 7, utf8_decode($item[1]), '1', 0, 'R');
+            $this->setFont('Arial', 'I', 12);
+            $this->cell(42, 8, utf8_decode($item[1]), '1', 0, 'R');
             $this->Ln();
         }
         $this->setX(22);
