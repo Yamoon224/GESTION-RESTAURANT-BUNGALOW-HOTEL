@@ -41,16 +41,18 @@ class ProductController extends Controller
             $data['img'] = $request->file('img')->store('images/products');
 
         $product = Product::create( $data );
-        foreach ($data['product_id'] as $key => $item) {
-            ProductDetail::create([
-                'qty' => $data['qty'][$key],
-                'price' => $data['price'][$key],
-                'amount' => $data['amount'][$key],
-                'ingredient_id' => $item,
-                'product_id' => $product->id,
-                'created_by' => auth()->id(),
-                'updated_by' => auth()->id()
-            ]);
+        if (!empty($data['product_id'])) {
+            foreach ($data['product_id'] as $key => $item) {
+                ProductDetail::create([
+                    'qty' => $data['qty'][$key],
+                    'price' => $data['price'][$key],
+                    'amount' => $data['amount'][$key],
+                    'ingredient_id' => $item,
+                    'product_id' => $product->id,
+                    'created_by' => auth()->id(),
+                    'updated_by' => auth()->id()
+                ]);
+            }
         }
 
         return back()->with(['message'=>__('locale.save', ['param'=>$product->category->name])]);

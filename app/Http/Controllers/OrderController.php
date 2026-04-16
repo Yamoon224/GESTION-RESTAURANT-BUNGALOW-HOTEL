@@ -14,7 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = auth()->user()->group_id == 3 ? Order::where('created_by', auth()->id())->orderByDesc('id')->get() : Order::orderByDesc('id')->get();
+        $orders = auth()->user()->group_id == 3
+            ? Order::where('created_by', auth()->id())->whereYear('created_at', now()->year)->orderByDesc('id')->get()
+            : Order::whereYear('created_at', now()->year)->orderByDesc('id')->get();
         $products = Product::where('qty', '>', 0)->get();
         return view('admin.orders.index', compact('products', 'orders'));
     }
