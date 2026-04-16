@@ -50,7 +50,7 @@ class App extends Fpdf
         // ===== EN-TÊTE =====
         $logoPath = public_path('images/logo.png');
         if (file_exists($logoPath)) {
-            $logoW = 28;
+            $logoW = 15;
             $this->Image($logoPath, (80 - $logoW) / 2, $this->GetY(), $logoW, $logoW, 'PNG');
             $this->Ln($logoW + 2);
         }
