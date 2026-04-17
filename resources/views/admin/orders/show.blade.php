@@ -10,11 +10,11 @@
                         <div class="card-body">
                             <div class="row overflow-auto">
                                 <div class="col-md-8 mx-auto mb-2">
-                                    <a class="btn btn-info d-inline-block" href="{{ route('orders.receipt', [$order->id, 'bill']) }}" title="@lang('locale.print_receipt')">
+                                    <a class="btn btn-info d-inline-block" href="{{ route('orders.receipt', [$order->id, 'bill']) }}" target="_blank" title="@lang('locale.print_receipt')">
                                         <i class="typcn icon typcn-printer"></i> @lang('locale.bill')
                                     </a>
                                     @if ($order->received)
-                                    <a class="btn btn-info d-inline-block" href="{{ route('orders.receipt', [$order->id, 'receipt']) }}" title="@lang('locale.print_receipt')">
+                                    <a class="btn btn-info d-inline-block" href="{{ route('orders.receipt', [$order->id, 'receipt']) }}" target="_blank" title="@lang('locale.print_receipt')">
                                         <i class="typcn icon typcn-printer"></i> @lang('locale.receipt')
                                     </a>                                       
                                     @else

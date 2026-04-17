@@ -43,7 +43,7 @@ class App extends Fpdf
     }
 
     // Ticket de caisse style thermique
-    function bill($header, $data, $others = NULL, $meta = [])
+    function bill($header, $data, $others = NULL, $meta = [], $title = 'FACTURE')
     {
         $usable = 76;
 
@@ -72,7 +72,7 @@ class App extends Fpdf
         // ===== TITRE =====
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 11);
-        $this->Cell($usable, 7, utf8_decode('FACTURE'), 0, 1, 'C');
+        $this->Cell($usable, 7, utf8_decode($title), 0, 1, 'C');
 
         $this->ticketSeparator();
 
