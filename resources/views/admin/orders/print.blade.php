@@ -3,44 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impression en cours…</title>
+    <title>Impression</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { width: 100%; height: 100%; background: #f5f5f5; font-family: Arial, sans-serif; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #333; }
 
-        /* iframe caché hors écran — doit rester dans le DOM pour se charger */
         iframe {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
-            width: 1px;
-            height: 1px;
+            display: block;
+            width: 100%;
+            height: 100%;
             border: none;
         }
 
-        /* Message visible pendant la préparation */
-        #msg {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            gap: 16px;
-            color: #555;
-        }
-        .spinner {
-            width: 40px; height: 40px;
-            border: 4px solid #ccc;
-            border-top-color: #900;
-            border-radius: 50%;
-            animation: spin .8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        @media print {
-            #msg { display: none; }
-            iframe { position: static; width: 100%; height: 100%; left: 0; top: 0; }
-        }
+        #msg { display: none; }
     </style>
 </head>
 <body>
