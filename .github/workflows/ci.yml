@@ -1,0 +1,97 @@
+name: CI — Tests & Build
+
+on:
+  push:
+    branches: [main, deployment]
+  pull_request:
+    branches: [main, deployment]
+
+jobs:
+  # ─────────────────────────────────────────────
+  # 1. Tests PHP (Laravel / PHPUnit)
+  # ─────────────────────────────────────────────
+  tests:
+    name: PHP ${{ matrix.php }} — Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["8.1", "8.2"]
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_DATABASE: testing
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurer PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, pdo, pdo_mysql, gd, zip, bcmath, intl
+          coverage: none
+
+      - name: Mettre en cache les dépendances Composer
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ matrix.php }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ matrix.php }}-
+
+      - name: Installer les dépendances Composer
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Copier le fichier .env
+        run: cp .env.example .env
+
+      - name: Configurer l'environnement de test
+        run: |
+          php artisan key:generate
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=testing" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=secret" >> .env
+
+      - name: Exécuter les migrations
+        run: php artisan migrate --force
+
+      - name: Lancer les tests PHPUnit
+        run: php artisan test --parallel
+
+  # ─────────────────────────────────────────────
+  # 2. Build des assets (Node / Vite)
+  # ─────────────────────────────────────────────
+  build-assets:
+    name: Node — Build Vite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Installer les dépendances npm
+        run: npm ci
+
+      - name: Build des assets
+        run: npm run build
