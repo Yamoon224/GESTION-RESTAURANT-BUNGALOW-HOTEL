@@ -45,13 +45,13 @@ class App extends Fpdf
     // Ticket de caisse style thermique
     function bill($header, $data, $others = NULL, $meta = [], $title = 'FACTURE')
     {
-        $usable = 54; // papier 58mm − 2mm marge gauche − 2mm marge droite
+        $usable = 76; // papier 80mm − 2mm marge gauche − 2mm marge droite
 
         // ===== EN-TÊTE =====
         $logoPath = public_path('images/logo.png');
         if (file_exists($logoPath)) {
             $logoW = 12;
-            $this->Image($logoPath, (58 - $logoW) / 2, $this->GetY(), $logoW, $logoW, 'PNG');
+            $this->Image($logoPath, (80 - $logoW) / 2, $this->GetY(), $logoW, $logoW, 'PNG');
             $this->Ln($logoW + 2);
         }
 
@@ -86,27 +86,27 @@ class App extends Fpdf
         $this->SetFont('Arial', 'B', 8);
         $this->Cell(14, 5, utf8_decode('Caisse:'), 0, 0, 'L');
         $this->SetFont('Arial', '', 8);
-        $this->Cell(28, 5, utf8_decode($caisse), 0, 0, 'L');
+        $this->Cell(44, 5, utf8_decode($caisse), 0, 0, 'L');
         $this->SetFont('Arial', 'B', 8);
-        $this->Cell(12, 5, 'CASH', 0, 1, 'R');
+        $this->Cell(18, 5, 'CASH', 0, 1, 'R');
 
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 8);
         $this->Cell(14, 5, utf8_decode('Client:'), 0, 0, 'L');
         $this->SetFont('Arial', '', 8);
-        $this->Cell(40, 5, utf8_decode($client), 0, 1, 'L');
+        $this->Cell(62, 5, utf8_decode($client), 0, 1, 'L');
 
         $this->SetX(2);
         $this->SetFont('Arial', 'I', 7);
-        $this->Cell(34, 4, utf8_decode("Le $date"), 0, 0, 'L');
+        $this->Cell(48, 4, utf8_decode("Le $date"), 0, 0, 'L');
         $this->SetFont('Arial', 'IB', 7);
-        $this->Cell(20, 4, utf8_decode("N A : $count"), 0, 1, 'R');
+        $this->Cell(28, 4, utf8_decode("N A : $count"), 0, 1, 'R');
 
         $this->Ln(1);
         $this->ticketSeparator();
 
         // ===== EN-TÊTE COLONNES =====
-        $w = [22, 12, 6, 14]; // total = 54mm
+        $w = [30, 17, 8, 21]; // total = 76mm
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 7);
         foreach ($header as $i => $col) {
@@ -136,8 +136,8 @@ class App extends Fpdf
             foreach ($keys as $i => $key) {
                 $this->SetX(2);
                 $this->SetFont('Arial', $i === $last ? 'B' : '', 8);
-                $this->Cell(30, 5, utf8_decode($key), 0, 0, 'L');
-                $this->Cell(24, 5, utf8_decode($values[$i]), 0, 1, 'R');
+                $this->Cell(42, 5, utf8_decode($key), 0, 0, 'L');
+                $this->Cell(34, 5, utf8_decode($values[$i]), 0, 1, 'R');
             }
         }
 
@@ -226,10 +226,10 @@ class App extends Fpdf
     {
         $this->SetFont('Arial', '', 7);
         $unit  = $this->GetStringWidth('* ');
-        $count = (int)(52 / $unit);
+        $count = (int)(74 / $unit);
         $sep   = str_repeat('* ', $count);
         $this->SetX(2);
-        $this->Cell(54, 5, $sep, 0, 1, 'C');
+        $this->Cell(76, 5, $sep, 0, 1, 'C');
     }
 
     // Code barres Code 39

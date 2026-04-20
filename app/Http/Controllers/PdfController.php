@@ -22,7 +22,7 @@ class PdfController extends Controller
         $data  = OrderDetail::with('product')->where('order_id', $order->id)->get()->toArray();
 
         if ($type == 'bill') {
-            $this->pdf = new App('P', 'mm', [58, 250]);
+            $this->pdf = new App('P', 'mm', [80, 250]);
             $this->pdf->setTitle(utf8_decode('FACTURE'));
             $this->pdf->SetMargins(2, 3, 2);
             $this->pdf->disableFooter = true;
@@ -45,7 +45,7 @@ class PdfController extends Controller
                 ]
             );
         } else {
-            $this->pdf = new App('P', 'mm', [58, 270]);
+            $this->pdf = new App('P', 'mm', [80, 270]);
             $this->pdf->setTitle(utf8_decode('REÇU'));
             $this->pdf->SetMargins(2, 3, 2);
             $this->pdf->disableFooter = true;
