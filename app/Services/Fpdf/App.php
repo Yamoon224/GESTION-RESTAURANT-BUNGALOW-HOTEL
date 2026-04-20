@@ -45,34 +45,34 @@ class App extends Fpdf
     // Ticket de caisse style thermique
     function bill($header, $data, $others = NULL, $meta = [], $title = 'FACTURE')
     {
-        $usable = 76;
+        $usable = 54; // papier 58mm − 2mm marge gauche − 2mm marge droite
 
         // ===== EN-TÊTE =====
         $logoPath = public_path('images/logo.png');
         if (file_exists($logoPath)) {
-            $logoW = 15;
-            $this->Image($logoPath, (80 - $logoW) / 2, $this->GetY(), $logoW, $logoW, 'PNG');
+            $logoW = 12;
+            $this->Image($logoPath, (58 - $logoW) / 2, $this->GetY(), $logoW, $logoW, 'PNG');
             $this->Ln($logoW + 2);
         }
 
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 13);
-        $this->Cell($usable, 8, utf8_decode('BUNGALOWS HOTEL'), 0, 1, 'C');
+        $this->SetFont('Arial', 'B', 10);
+        $this->Cell($usable, 7, utf8_decode('BUNGALOWS HOTEL'), 0, 1, 'C');
 
         $this->SetX(2);
-        $this->SetFont('Arial', '', 8);
-        $this->Cell($usable, 5, "Yamoussoukro, C\xf4te d'Ivoire", 0, 1, 'C');
+        $this->SetFont('Arial', '', 7);
+        $this->Cell($usable, 4, "Yamoussoukro, C\xf4te d'Ivoire", 0, 1, 'C');
 
         $this->SetX(2);
-        $this->Cell($usable, 5, utf8_decode('Tel: 2730610871'), 0, 1, 'C');
+        $this->Cell($usable, 4, utf8_decode('Tel: 2730610871'), 0, 1, 'C');
 
         $this->Ln(1);
         $this->ticketSeparator();
 
         // ===== TITRE =====
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 11);
-        $this->Cell($usable, 7, utf8_decode($title), 0, 1, 'C');
+        $this->SetFont('Arial', 'B', 9);
+        $this->Cell($usable, 6, utf8_decode($title), 0, 1, 'C');
 
         $this->ticketSeparator();
 
@@ -83,45 +83,45 @@ class App extends Fpdf
         $count  = $meta['count']  ?? 0;
 
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 9);
-        $this->Cell(15, 6, utf8_decode('Caisse:'), 0, 0, 'L');
-        $this->SetFont('Arial', '', 9);
-        $this->Cell(43, 6, utf8_decode($caisse), 0, 0, 'L');
-        $this->SetFont('Arial', 'B', 9);
-        $this->Cell(18, 6, 'CASH', 0, 1, 'R');
+        $this->SetFont('Arial', 'B', 8);
+        $this->Cell(14, 5, utf8_decode('Caisse:'), 0, 0, 'L');
+        $this->SetFont('Arial', '', 8);
+        $this->Cell(28, 5, utf8_decode($caisse), 0, 0, 'L');
+        $this->SetFont('Arial', 'B', 8);
+        $this->Cell(12, 5, 'CASH', 0, 1, 'R');
 
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 9);
-        $this->Cell(15, 6, utf8_decode('Client:'), 0, 0, 'L');
-        $this->SetFont('Arial', '', 9);
-        $this->Cell(61, 6, utf8_decode($client), 0, 1, 'L');
+        $this->SetFont('Arial', 'B', 8);
+        $this->Cell(14, 5, utf8_decode('Client:'), 0, 0, 'L');
+        $this->SetFont('Arial', '', 8);
+        $this->Cell(40, 5, utf8_decode($client), 0, 1, 'L');
 
         $this->SetX(2);
-        $this->SetFont('Arial', 'I', 8);
-        $this->Cell(48, 5, utf8_decode("Le $date"), 0, 0, 'L');
-        $this->SetFont('Arial', 'IB', 8);
-        $this->Cell(28, 5, utf8_decode("N A : $count"), 0, 1, 'R');
+        $this->SetFont('Arial', 'I', 7);
+        $this->Cell(34, 4, utf8_decode("Le $date"), 0, 0, 'L');
+        $this->SetFont('Arial', 'IB', 7);
+        $this->Cell(20, 4, utf8_decode("N A : $count"), 0, 1, 'R');
 
         $this->Ln(1);
         $this->ticketSeparator();
 
         // ===== EN-TÊTE COLONNES =====
-        $w = [32, 18, 8, 18];
+        $w = [22, 12, 6, 14]; // total = 54mm
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 10);
+        $this->SetFont('Arial', 'B', 7);
         foreach ($header as $i => $col) {
-            $this->Cell($w[$i], 7, utf8_decode($col), 'B', 0, 'C');
+            $this->Cell($w[$i], 6, utf8_decode($col), 'B', 0, 'C');
         }
         $this->Ln();
 
         // ===== ARTICLES =====
-        $this->SetFont('Arial', '', 9);
+        $this->SetFont('Arial', '', 7);
         foreach ($data as $row) {
             $this->SetX(2);
-            $this->Cell($w[0], 6, utf8_decode($row['product']['name']), 0, 0, 'L');
-            $this->Cell($w[1], 6, utf8_decode(moneyFormat($row['price'])), 0, 0, 'R');
-            $this->Cell($w[2], 6, utf8_decode($row['qty']), 0, 0, 'C');
-            $this->Cell($w[3], 6, utf8_decode(moneyFormat($row['amount'])), 0, 0, 'R');
+            $this->Cell($w[0], 5, utf8_decode($row['product']['name']), 0, 0, 'L');
+            $this->Cell($w[1], 5, utf8_decode(moneyFormat($row['price'])), 0, 0, 'R');
+            $this->Cell($w[2], 5, utf8_decode($row['qty']), 0, 0, 'C');
+            $this->Cell($w[3], 5, utf8_decode(moneyFormat($row['amount'])), 0, 0, 'R');
             $this->Ln();
         }
 
@@ -135,9 +135,9 @@ class App extends Fpdf
             $last   = count($keys) - 1;
             foreach ($keys as $i => $key) {
                 $this->SetX(2);
-                $this->SetFont('Arial', $i === $last ? 'B' : '', 9);
-                $this->Cell(44, 6, utf8_decode($key), 0, 0, 'L');
-                $this->Cell(32, 6, utf8_decode($values[$i]), 0, 1, 'R');
+                $this->SetFont('Arial', $i === $last ? 'B' : '', 8);
+                $this->Cell(30, 5, utf8_decode($key), 0, 0, 'L');
+                $this->Cell(24, 5, utf8_decode($values[$i]), 0, 1, 'R');
             }
         }
 
@@ -146,14 +146,14 @@ class App extends Fpdf
 
         // ===== MERCI =====
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 11);
-        $this->Cell($usable, 7, utf8_decode('MERCI POUR VOTRE VISITE!'), 0, 1, 'C');
+        $this->SetFont('Arial', 'B', 9);
+        $this->Cell($usable, 6, utf8_decode('MERCI POUR VOTRE VISITE!'), 0, 1, 'C');
 
         $this->Ln(3);
 
         // ===== CODE BARRES =====
         $orderId = str_pad($meta['order_id'] ?? 0, 8, '0', STR_PAD_LEFT);
-        $this->Code39($orderId, 3, 70, 14);
+        $this->Code39($orderId, 2, 50, 12);
 
         $this->SetX(2);
         $this->SetFont('Arial', '', 7);
@@ -226,10 +226,10 @@ class App extends Fpdf
     {
         $this->SetFont('Arial', '', 7);
         $unit  = $this->GetStringWidth('* ');
-        $count = (int)(74 / $unit);
+        $count = (int)(52 / $unit);
         $sep   = str_repeat('* ', $count);
         $this->SetX(2);
-        $this->Cell(76, 5, $sep, 0, 1, 'C');
+        $this->Cell(54, 5, $sep, 0, 1, 'C');
     }
 
     // Code barres Code 39
