@@ -21,61 +21,33 @@ class PdfController extends Controller
         $order = Order::find($id);
         $data  = OrderDetail::with('product')->where('order_id', $order->id)->get()->toArray();
 
+        $meta = [
+            'caisse'   => $order->creator->firstname.' '.$order->creator->name,
+            'client'   => 'CL DIVERS',
+            'date'     => date('d/m/Y à H:i:s', strtotime($order->created_at)),
+            'count'    => $order->order_details->count(),
+            'order_id' => $order->id,
+        ];
+
         if ($type == 'bill') {
-            $this->pdf = new App('P', 'mm', [80, 250]);
-            $this->pdf->setTitle(utf8_decode('FACTURE'));
-            $this->pdf->SetMargins(2, 3, 2);
-            $this->pdf->disableFooter = true;
-            $this->pdf->addPage();
-
-            $this->pdf->bill(
-                ['DESIGNATION', 'PRIX U', 'QTE', 'TOTAL'],
-                $data,
-                [
-                    'Remise appliquée: ' => moneyFormat(0),
-                    'TVA appliquée: '    => moneyFormat(0),
-                    'Net à payer: '      => moneyFormat($order->amount),
-                ],
-                [
-                    'caisse'   => $order->creator->firstname.' '.$order->creator->name,
-                    'client'   => 'CL DIVERS',
-                    'date'     => date('d/m/Y à H:i:s', strtotime($order->created_at)),
-                    'count'    => $order->order_details->count(),
-                    'order_id' => $order->id,
-                ]
-            );
+            $title  = 'FACTURE';
+            $others = [
+                'Remise appliquée: ' => moneyformat(0),
+                'TVA appliquée: '    => moneyformat(0),
+                'Net à payer: '      => moneyformat($order->amount),
+            ];
         } else {
-            $this->pdf = new App('P', 'mm', [80, 270]);
-            $this->pdf->setTitle(utf8_decode('REÇU'));
-            $this->pdf->SetMargins(2, 3, 2);
-            $this->pdf->disableFooter = true;
-            $this->pdf->addPage();
-
-            $this->pdf->bill(
-                ['DESIGNATION', 'PRIX U', 'QTE', 'TOTAL'],
-                $data,
-                [
-                    'Remise appliquée: ' => moneyFormat(0),
-                    'TVA appliquée: '    => moneyFormat(0),
-                    'Net à payer: '      => moneyFormat($order->amount),
-                    'Espèces: '          => moneyFormat($order->received),
-                    'Monnaie rendue: '   => moneyFormat($order->rest),
-                ],
-                [
-                    'caisse'   => $order->creator->firstname.' '.$order->creator->name,
-                    'client'   => 'CL DIVERS',
-                    'date'     => date('d/m/Y à H:i:s', strtotime($order->created_at)),
-                    'count'    => $order->order_details->count(),
-                    'order_id' => $order->id,
-                ],
-                'REÇU'
-            );
+            $title  = 'REÇU';
+            $others = [
+                'Remise appliquée: ' => moneyformat(0),
+                'TVA appliquée: '    => moneyformat(0),
+                'Net à payer: '      => moneyformat($order->amount),
+                'Espèces: '          => moneyformat($order->received),
+                'Monnaie rendue: '   => moneyformat($order->rest),
+            ];
         }
 
-        $pdfContent = $this->pdf->output('S');
-        $pdfBase64 = base64_encode($pdfContent);
-
-        return view('admin.orders.print', compact('pdfBase64'));
+        return view('admin.orders.thermal', compact('title', 'data', 'others', 'meta'));
     }
 
     public function dailyreport(Request $request) 
