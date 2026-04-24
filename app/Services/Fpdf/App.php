@@ -19,7 +19,7 @@ class App extends Fpdf
         // Police Arial italique 8
         // Numéro de page
         $this->SetX(0);
-        $this->SetFont('Arial', 'I', 7);
+        $this->SetFont('Arial', 'I', 8);
         $this->Cell(80, 4, "Yamoussoukro, C\xf4te d'Ivoire", '', 1, 'C');
         $this->SetX(0);
         $this->Cell(80, 4, utf8_decode("2730610871 - direction@bungalowshotel.net - www.bungalowshotel.net"), '', 1, 'C');
@@ -56,11 +56,11 @@ class App extends Fpdf
         }
 
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 11);
+        $this->SetFont('Arial', 'B', 12);
         $this->Cell($usable, 8, utf8_decode('BUNGALOWS HOTEL'), 0, 1, 'C');
 
         $this->SetX(2);
-        $this->SetFont('Arial', '', 8);
+        $this->SetFont('Arial', '', 9);
         $this->Cell($usable, 5, "Yamoussoukro, C\xf4te d'Ivoire", 0, 1, 'C');
 
         $this->SetX(2);
@@ -71,7 +71,7 @@ class App extends Fpdf
 
         // ===== TITRE =====
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 10);
+        $this->SetFont('Arial', 'B', 11);
         $this->Cell($usable, 7, utf8_decode($title), 0, 1, 'C');
 
         $this->ticketSeparator();
@@ -83,23 +83,23 @@ class App extends Fpdf
         $count  = $meta['count']  ?? 0;
 
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 9);
+        $this->SetFont('Arial', 'B', 10);
         $this->Cell(14, 6, utf8_decode('Caisse:'), 0, 0, 'L');
-        $this->SetFont('Arial', '', 9);
+        $this->SetFont('Arial', '', 10);
         $this->Cell(44, 6, utf8_decode($caisse), 0, 0, 'L');
-        $this->SetFont('Arial', 'B', 9);
+        $this->SetFont('Arial', 'B', 10);
         $this->Cell(18, 6, 'CASH', 0, 1, 'R');
 
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 9);
+        $this->SetFont('Arial', 'B', 10);
         $this->Cell(14, 6, utf8_decode('Client:'), 0, 0, 'L');
-        $this->SetFont('Arial', '', 9);
+        $this->SetFont('Arial', '', 10);
         $this->Cell(62, 6, utf8_decode($client), 0, 1, 'L');
 
         $this->SetX(2);
-        $this->SetFont('Arial', 'I', 8);
+        $this->SetFont('Arial', 'I', 9);
         $this->Cell(48, 5, utf8_decode("Le $date"), 0, 0, 'L');
-        $this->SetFont('Arial', 'IB', 8);
+        $this->SetFont('Arial', 'IB', 9);
         $this->Cell(28, 5, utf8_decode("N A : $count"), 0, 1, 'R');
 
         $this->Ln(1);
@@ -108,14 +108,14 @@ class App extends Fpdf
         // ===== EN-TÊTE COLONNES =====
         $w = [30, 17, 8, 21]; // total = 76mm
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 8);
+        $this->SetFont('Arial', 'B', 9);
         foreach ($header as $i => $col) {
             $this->Cell($w[$i], 7, utf8_decode($col), 'B', 0, 'C');
         }
         $this->Ln();
 
         // ===== ARTICLES =====
-        $this->SetFont('Arial', '', 8);
+        $this->SetFont('Arial', '', 9);
         foreach ($data as $row) {
             $this->SetX(2);
             $this->Cell($w[0], 6, utf8_decode($row['product']['name']), 0, 0, 'L');
@@ -135,7 +135,7 @@ class App extends Fpdf
             $last   = count($keys) - 1;
             foreach ($keys as $i => $key) {
                 $this->SetX(2);
-                $this->SetFont('Arial', $i === $last ? 'B' : '', 9);
+                $this->SetFont('Arial', $i === $last ? 'B' : '', 10);
                 $this->Cell(42, 6, utf8_decode($key), 0, 0, 'L');
                 $this->Cell(34, 6, utf8_decode($values[$i]), 0, 1, 'R');
             }
@@ -146,7 +146,7 @@ class App extends Fpdf
 
         // ===== MERCI =====
         $this->SetX(2);
-        $this->SetFont('Arial', 'B', 10);
+        $this->SetFont('Arial', 'B', 11);
         $this->Cell($usable, 7, utf8_decode('MERCI POUR VOTRE VISITE!'), 0, 1, 'C');
 
         $this->Ln(3);
@@ -156,7 +156,7 @@ class App extends Fpdf
         $this->Code39($orderId, 2, 50, 12);
 
         $this->SetX(2);
-        $this->SetFont('Arial', '', 8);
+        $this->SetFont('Arial', '', 9);
         $this->Cell($usable, 5, $orderId, 0, 1, 'C');
 
         $this->Ln(3);
@@ -169,12 +169,12 @@ class App extends Fpdf
         $width = [32, 18, 8, 18];
         
         // Headers
-        $this->setFont('Arial', 'B', 11);
+        $this->setFont('Arial', 'B', 12);
         for($i = 0; $i < count($header); $i++)
             $this->cell($width[$i], 9, utf8_decode($header[$i]), '1', 0, 'C');
         $this->Ln();
 
-        $this->setFont('Arial', '', 10);
+        $this->setFont('Arial', '', 11);
         // Data
         foreach($data as $key => $row)
         {
@@ -189,16 +189,16 @@ class App extends Fpdf
         foreach($others as $item)
         {
             $this->setX(2);
-            $this->setFont('Arial', 'B', 10);
+            $this->setFont('Arial', 'B', 11);
             $this->cell(15, 9, utf8_decode($item[0]), '1', 0, 'R');
 
-            $this->setFont('Arial', 'I', 10);
+            $this->setFont('Arial', 'I', 11);
             $this->cell(25, 9, utf8_decode($item[1]), '1', 0, 'R');
 
-            $this->setFont('Arial', 'B', 10);
+            $this->setFont('Arial', 'B', 11);
             $this->cell(18, 9, utf8_decode($item[2]), '1', 0, 'R');
             
-            $this->setFont('Arial', 'I', 10);
+            $this->setFont('Arial', 'I', 11);
             $this->cell(18, 9, utf8_decode($item[3]), '1', 0, 'R');
             $this->Ln();
         }
@@ -211,10 +211,10 @@ class App extends Fpdf
         foreach($data as $item)
         {
             $this->setX(4);
-            $this->setFont('Arial', 'IB', 11);
+            $this->setFont('Arial', 'IB', 12);
             $this->cell(30, 9, utf8_decode($item[0]), '1', 0, 'L');
             
-            $this->setFont('Arial', 'I', 11);
+            $this->setFont('Arial', 'I', 12);
             $this->cell(42, 9, utf8_decode($item[1]), '1', 0, 'R');
             $this->Ln();
         }
@@ -224,7 +224,7 @@ class App extends Fpdf
     // Séparateur de ticket thermique (ligne d'astérisques)
     function ticketSeparator()
     {
-        $this->SetFont('Arial', '', 8);
+        $this->SetFont('Arial', '', 9);
         $unit  = $this->GetStringWidth('* ');
         $count = (int)(74 / $unit);
         $sep   = str_repeat('* ', $count);
