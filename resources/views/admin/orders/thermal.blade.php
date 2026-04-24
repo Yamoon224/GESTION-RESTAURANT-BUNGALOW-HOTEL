@@ -13,13 +13,14 @@
         html, body {
             width: 80mm;
             font-family: Arial, sans-serif;
-            font-size: 11px;
+            font-size: 13px;
             background: #fff;
             color: #000;
+            line-height: 1.5;
         }
         .wrap {
             width: 80mm;
-            padding: 3mm 4mm 4mm 4mm;
+            padding: 4mm 4mm 6mm 4mm;
         }
         .center  { text-align: center; }
         .right   { text-align: right; }
@@ -32,56 +33,61 @@
             width: 100%;
             border: none;
             border-top: 1px dashed #000;
-            margin: 3px 0;
+            margin: 5px 0;
         }
 
         /* En-tête */
         .hotel-name {
-            font-size: 14px;
+            font-size: 17px;
             font-weight: bold;
             text-align: center;
             letter-spacing: 1px;
+            margin-bottom: 2px;
         }
         .hotel-sub {
-            font-size: 9px;
+            font-size: 11px;
             text-align: center;
-            line-height: 1.4;
+            line-height: 1.6;
         }
         .doc-title {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
             text-align: center;
-            margin: 2px 0;
+            margin: 4px 0;
+            letter-spacing: 1px;
         }
 
         /* Meta */
-        .meta { font-size: 10px; }
+        .meta { font-size: 12px; }
         .meta-row {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 1px;
+            margin-bottom: 4px;
         }
-        .meta-label { font-weight: bold; flex-shrink: 0; margin-right: 3px; }
+        .meta-label { font-weight: bold; flex-shrink: 0; margin-right: 4px; }
         .meta-value { flex: 1; }
-        .meta-right { font-weight: bold; margin-left: 3px; }
+        .meta-right { font-weight: bold; margin-left: 4px; }
 
         /* Tableau articles */
         .items {
             width: 100%;
             border-collapse: collapse;
-            font-size: 9px;
-            margin-top: 1px;
+            font-size: 11px;
+            margin-top: 3px;
         }
         .items thead th {
-            border-bottom: 1px solid #000;
-            padding: 2px 2px;
-            font-size: 9px;
+            border-bottom: 1.5px solid #000;
+            padding: 4px 3px;
+            font-size: 11px;
             font-weight: bold;
         }
         .items tbody td {
-            padding: 2px 2px;
-            vertical-align: top;
+            padding: 4px 3px;
+            vertical-align: middle;
+        }
+        .items tbody tr:not(:last-child) td {
+            border-bottom: 1px dotted #ccc;
         }
         .col-name  { width: 42%; text-align: left; }
         .col-price { width: 22%; text-align: right; }
@@ -92,27 +98,33 @@
         .totals {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10px;
+            font-size: 12px;
         }
-        .totals td { padding: 1px 2px; }
+        .totals td { padding: 3px 2px; }
         .totals td:last-child { text-align: right; }
-        .totals .last-row td { font-weight: bold; font-size: 11px; }
+        .totals .last-row td {
+            font-weight: bold;
+            font-size: 14px;
+            padding-top: 5px;
+            border-top: 1px solid #000;
+        }
 
         /* Merci */
         .merci {
-            font-size: 13px;
+            font-size: 15px;
             font-weight: bold;
             text-align: center;
-            margin: 5px 0 4px;
+            margin: 7px 0 5px;
+            letter-spacing: 1px;
         }
 
         /* Code-barres */
-        .barcode-wrap { text-align: center; margin-top: 3px; }
-        .barcode-num  { font-size: 8px; text-align: center; margin-top: 2px; letter-spacing: 2px; }
+        .barcode-wrap { text-align: center; margin-top: 5px; }
+        .barcode-num  { font-size: 10px; text-align: center; margin-top: 3px; letter-spacing: 3px; }
 
         @media print {
             html, body { width: 80mm; }
-            .wrap { padding: 2mm 4mm 6mm 4mm; }
+            .wrap { padding: 3mm 4mm 8mm 4mm; }
         }
     </style>
 </head>
@@ -121,15 +133,15 @@
 
     {{-- Logo --}}
     @if(file_exists(public_path('images/logo.png')))
-    <div class="center" style="margin-bottom: 2mm;">
-        <img src="{{ asset('images/logo.png') }}" style="height: 12mm;" alt="logo">
+    <div class="center" style="margin-bottom: 3mm;">
+        <img src="{{ asset('images/logo.png') }}" style="height: 14mm;" alt="logo">
     </div>
     @endif
 
     {{-- En-tête hôtel --}}
     <div class="hotel-name">BUNGALOWS HOTEL</div>
     <div class="hotel-sub">Yamoussoukro, Côte d'Ivoire</div>
-    <div class="hotel-sub">Tel: 2730610871</div>
+    <div class="hotel-sub" style="margin-bottom:3px;">Tel: 2730610871</div>
 
     <hr class="sep">
 
@@ -139,7 +151,7 @@
     <hr class="sep">
 
     {{-- Informations caisse --}}
-    <div class="meta">
+    <div class="meta" style="margin: 3px 0;">
         <div class="meta-row">
             <span class="meta-label">Caisse:</span>
             <span class="meta-value">{{ $meta['caisse'] }}</span>
@@ -149,9 +161,9 @@
             <span class="meta-label">Client:</span>
             <span class="meta-value">{{ $meta['client'] }}</span>
         </div>
-        <div class="meta-row italic" style="font-size:9px;">
+        <div class="meta-row italic" style="font-size:11px; margin-top:3px;">
             <span>Le {{ $meta['date'] }}</span>
-            <span>N A : {{ $meta['count'] }}</span>
+            <span>N° Art : {{ $meta['count'] }}</span>
         </div>
     </div>
 
