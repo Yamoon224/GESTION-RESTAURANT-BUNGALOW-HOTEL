@@ -57,24 +57,25 @@ class App extends Fpdf
 
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 12);
-        $this->Cell($usable, 8, utf8_decode('BUNGALOWS HOTEL'), 0, 1, 'C');
+        $this->Cell($usable, 9, utf8_decode('BUNGALOWS HOTEL'), 0, 1, 'C');
 
         $this->SetX(2);
         $this->SetFont('Arial', '', 9);
-        $this->Cell($usable, 5, "Yamoussoukro, C\xf4te d'Ivoire", 0, 1, 'C');
+        $this->Cell($usable, 6, "Yamoussoukro, C\xf4te d'Ivoire", 0, 1, 'C');
 
         $this->SetX(2);
-        $this->Cell($usable, 5, utf8_decode('Tel: 2730610871'), 0, 1, 'C');
+        $this->Cell($usable, 6, utf8_decode('Tel: 2730610871'), 0, 1, 'C');
 
-        $this->Ln(1);
+        $this->Ln(2);
         $this->ticketSeparator();
 
         // ===== TITRE =====
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 11);
-        $this->Cell($usable, 7, utf8_decode($title), 0, 1, 'C');
+        $this->Cell($usable, 8, utf8_decode($title), 0, 1, 'C');
 
         $this->ticketSeparator();
+        $this->Ln(1);
 
         // ===== INFO CAISSE / CLIENT =====
         $caisse = $meta['caisse'] ?? '';
@@ -84,25 +85,25 @@ class App extends Fpdf
 
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 10);
-        $this->Cell(14, 6, utf8_decode('Caisse:'), 0, 0, 'L');
+        $this->Cell(14, 7, utf8_decode('Caisse:'), 0, 0, 'L');
         $this->SetFont('Arial', '', 10);
-        $this->Cell(44, 6, utf8_decode($caisse), 0, 0, 'L');
+        $this->Cell(44, 7, utf8_decode($caisse), 0, 0, 'L');
         $this->SetFont('Arial', 'B', 10);
-        $this->Cell(18, 6, 'CASH', 0, 1, 'R');
+        $this->Cell(18, 7, 'CASH', 0, 1, 'R');
 
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 10);
-        $this->Cell(14, 6, utf8_decode('Client:'), 0, 0, 'L');
+        $this->Cell(14, 7, utf8_decode('Client:'), 0, 0, 'L');
         $this->SetFont('Arial', '', 10);
-        $this->Cell(62, 6, utf8_decode($client), 0, 1, 'L');
+        $this->Cell(62, 7, utf8_decode($client), 0, 1, 'L');
 
         $this->SetX(2);
         $this->SetFont('Arial', 'I', 9);
-        $this->Cell(48, 5, utf8_decode("Le $date"), 0, 0, 'L');
+        $this->Cell(48, 6, utf8_decode("Le $date"), 0, 0, 'L');
         $this->SetFont('Arial', 'IB', 9);
-        $this->Cell(28, 5, utf8_decode("N A : $count"), 0, 1, 'R');
+        $this->Cell(28, 6, utf8_decode("N A : $count"), 0, 1, 'R');
 
-        $this->Ln(1);
+        $this->Ln(2);
         $this->ticketSeparator();
 
         // ===== EN-TÊTE COLONNES =====
@@ -110,25 +111,23 @@ class App extends Fpdf
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 9);
         foreach ($header as $i => $col) {
-            $this->Cell($w[$i], 7, utf8_decode($col), 'B', 0, 'C');
+            $this->Cell($w[$i], 8, utf8_decode($col), 'B', 0, 'C');
         }
         $this->Ln();
+        $this->Ln(1);
 
         // ===== ARTICLES =====
         $this->SetFont('Arial', '', 9);
         foreach ($data as $row) {
             $this->SetX(2);
-            $this->Cell($w[0], 6, utf8_decode($row['product']['name']), 0, 0, 'L');
-            $this->Cell($w[1], 6, utf8_decode(moneyFormat($row['price'])), 0, 0, 'R');
-            $this->Cell($w[2], 6, utf8_decode($row['qty']), 0, 0, 'C');
-            $this->Cell($w[3], 6, utf8_decode(moneyFormat($row['amount'])), 0, 0, 'R');
+            $this->Cell($w[0], 7, utf8_decode($row['product']['name']), 0, 0, 'L');
+            $this->Cell($w[1], 7, utf8_decode(moneyFormat($row['price'])), 0, 0, 'R');
+            $this->Cell($w[2], 7, utf8_decode($row['qty']), 0, 0, 'C');
+            $this->Cell($w[3], 7, utf8_decode(moneyFormat($row['amount'])), 0, 0, 'R');
             $this->Ln();
         }
 
-        $this->Ln(1);
-        $this->ticketSeparator();
-
-        // ===== TOTAUX =====
+        $this->Ln(2);
         if ($others) {
             $keys   = array_keys($others);
             $values = array_values($others);
@@ -136,20 +135,21 @@ class App extends Fpdf
             foreach ($keys as $i => $key) {
                 $this->SetX(2);
                 $this->SetFont('Arial', $i === $last ? 'B' : '', 10);
-                $this->Cell(42, 6, utf8_decode($key), 0, 0, 'L');
-                $this->Cell(34, 6, utf8_decode($values[$i]), 0, 1, 'R');
+                $this->Cell(42, 7, utf8_decode($key), 0, 0, 'L');
+                $this->Cell(34, 7, utf8_decode($values[$i]), 0, 1, 'R');
             }
         }
 
-        $this->Ln(1);
+        $this->Ln(2);
         $this->ticketSeparator();
+        $this->Ln(2);
 
         // ===== MERCI =====
         $this->SetX(2);
         $this->SetFont('Arial', 'B', 11);
-        $this->Cell($usable, 7, utf8_decode('MERCI POUR VOTRE VISITE!'), 0, 1, 'C');
+        $this->Cell($usable, 8, utf8_decode('MERCI POUR VOTRE VISITE!'), 0, 1, 'C');
 
-        $this->Ln(3);
+        $this->Ln(4);
 
         // ===== CODE BARRES =====
         $orderId = str_pad($meta['order_id'] ?? 0, 8, '0', STR_PAD_LEFT);
@@ -225,9 +225,9 @@ class App extends Fpdf
     function ticketSeparator()
     {
         $this->SetFont('Arial', '', 9);
-        $unit  = $this->GetStringWidth('* ');
+        $unit  = $this->GetStringWidth('.');
         $count = (int)(74 / $unit);
-        $sep   = str_repeat('* ', $count);
+        $sep   = str_repeat('.', $count);
         $this->SetX(2);
         $this->Cell(76, 5, $sep, 0, 1, 'C');
     }
