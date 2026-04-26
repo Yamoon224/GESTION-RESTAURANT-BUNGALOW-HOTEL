@@ -17,8 +17,7 @@ class OrderController extends Controller
         $orders = auth()->user()->group_id == 3
             ? Order::where('created_by', auth()->id())->whereYear('created_at', now()->year)->orderByDesc('id')->get()
             : Order::whereYear('created_at', now()->year)->orderByDesc('id')->get();
-        $products = Product::where('qty', '>', 0)->get();
-        return view('admin.orders.index', compact('products', 'orders'));
+        return view('admin.orders.index', compact('orders'));
     }
 
     /**

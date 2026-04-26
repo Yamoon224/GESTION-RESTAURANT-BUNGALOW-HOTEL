@@ -15,7 +15,7 @@
                                 </div>
                                 @if(isAuthorize([1, 3]))
                                 <div class="col-md-6">
-                                    <a class="btn btn-success btn-icon" style="float: right" data-toggle="modal" data-target="#create-order">
+                                    <a class="btn btn-success btn-icon" style="float: right" href="{{ route('orders.create') }}">
                                         <i class="typcn icon typcn-plus"></i>
                                     </a>
                                 </div>
@@ -93,8 +93,6 @@
             </div>
         </div>
     </div>
-    <x-create-order :products="$products"></x-create-order>
-
     @push('scripts')
     <x-app-datascript></x-app-datascript>
     @endpush
