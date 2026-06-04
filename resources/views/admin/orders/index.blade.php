@@ -62,7 +62,7 @@
                                                 @endif
                                                 <td>
                                                     <div style="display: inline-block">
-                                                        @if(isAuthorize([1, 2]))
+                                                        @if(isAuthorize([1, 3]))
                                                         <a class="btn btn-primary" href="{{ route('orders.edit', $item->id) }}">
                                                             <i class="typcn icon typcn-edit"></i>
                                                         </a>                                                        
