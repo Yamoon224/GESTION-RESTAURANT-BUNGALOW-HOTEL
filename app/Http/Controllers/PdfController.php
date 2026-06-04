@@ -22,7 +22,7 @@ class PdfController extends Controller
         $data  = OrderDetail::with('product')->where('order_id', $order->id)->get()->toArray();
 
         $meta = [
-            'caisse'   => $order->creator->firstname.' '.$order->creator->name,
+            'caisse'   => $order->creator->firstname,
             'client'   => 'CL DIVERS',
             'date'     => date('d/m/Y à H:i:s', strtotime($order->created_at)),
             'count'    => $order->order_details->count(),
