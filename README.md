@@ -65,3 +65,36 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # GESTION-RESTAURANT-BUNGALOW-HOTEL
+
+## Synchronisation API et webhook
+
+Cette application expose maintenant une API de synchronisation protégée par jeton et envoie un webhook lors de la creation d'une commande.
+
+### Variables d'environnement
+
+- `SYNC_API_TOKEN` : jeton attendu sur les routes API via le header `Authorization: Bearer <token>` ou `X-Api-Token`
+- `ORDER_WEBHOOK_URL` : URL recevant les commandes en `POST` (par defaut `https://example.com/webhook`)
+- `ORDER_WEBHOOK_TIMEOUT` : timeout HTTP du webhook en secondes
+
+### Endpoints API
+
+- `GET /api/sync/products`
+- `GET /api/sync/products/{product}`
+- `GET /api/sync/orders`
+- `GET /api/sync/orders/{order}`
+
+### Payload webhook commande
+
+Le webhook envoie toutes les donnees de la commande, y compris les lignes de commande et les informations chargees sur les produits associes.
+
+## Documentation Scribe
+
+La documentation des routes API est preparee pour Scribe.
+
+Quand les dependances Composer seront installees, utilise :
+
+- `composer install`
+- `php artisan vendor:publish --tag=scribe-config`
+- `php artisan scribe:generate`
+
+Les annotations des endpoints sont deja placees sur les controleurs API de synchronisation.

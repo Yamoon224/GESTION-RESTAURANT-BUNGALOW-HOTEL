@@ -1,0 +1,189 @@
+name: 'Synchronisation Produits'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/sync/products
+    metadata:
+      groupName: 'Synchronisation Produits'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Lister les produits synchronisables.'
+      description: 'Retourne la liste paginee des produits avec leur categorie et leurs details.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {SYNC_API_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      page:
+        name: page
+        description: 'Numero de page.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanQueryParameters:
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "data": [
+              {
+                "id": 15,
+                "name": "Poulet braise",
+                "price": 4500,
+                "qty": 25,
+                "status": 1,
+                "img": "images/products/poulet.png",
+                "category_id": 3,
+                "category": {
+                  "id": 3,
+                  "name": "Plats"
+                },
+                "product_details": [
+                  {
+                    "id": 1,
+                    "qty": 1,
+                    "price": 1000,
+                    "amount": 1000,
+                    "ingredient_id": 7,
+                    "created_at": "2026-06-08T12:00:00.000000Z",
+                    "updated_at": "2026-06-08T12:00:00.000000Z"
+                  }
+                ],
+                "created_at": "2026-06-08T12:00:00.000000Z",
+                "updated_at": "2026-06-08T12:00:00.000000Z"
+              }
+            ],
+            "links": {
+              "first": "http://localhost/api/sync/products?page=1",
+              "last": "http://localhost/api/sync/products?page=1",
+              "prev": null,
+              "next": null
+            },
+            "meta": {
+              "current_page": 1,
+              "from": 1,
+              "last_page": 1,
+              "path": "http://localhost/api/sync/products",
+              "per_page": 50,
+              "to": 1,
+              "total": 1
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer EsyYgr/q0qgyop1nX+SZNdTNctXxX1e6kbAVz64RLZQ='
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/sync/products/{product_id}'
+    metadata:
+      groupName: 'Synchronisation Produits'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Afficher un produit synchronisable.'
+      description: "Retourne le detail d'un produit avec sa categorie et ses details de composition."
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {SYNC_API_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      product_id:
+        name: product_id
+        description: 'The ID of the product.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      product:
+        name: product
+        description: 'ID du produit.'
+        required: true
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      product_id: 17
+      product: 15
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "data": {
+              "id": 15,
+              "name": "Poulet braise",
+              "price": 4500,
+              "qty": 25,
+              "status": 1,
+              "img": "images/products/poulet.png",
+              "category_id": 3,
+              "category": {
+                "id": 3,
+                "name": "Plats"
+              },
+              "product_details": [
+                {
+                  "id": 1,
+                  "qty": 1,
+                  "price": 1000,
+                  "amount": 1000,
+                  "ingredient_id": 7,
+                  "created_at": "2026-06-08T12:00:00.000000Z",
+                  "updated_at": "2026-06-08T12:00:00.000000Z"
+                }
+              ],
+              "created_at": "2026-06-08T12:00:00.000000Z",
+              "updated_at": "2026-06-08T12:00:00.000000Z"
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer EsyYgr/q0qgyop1nX+SZNdTNctXxX1e6kbAVz64RLZQ='
+    controller: null
+    method: null
+    route: null
+    custom: []

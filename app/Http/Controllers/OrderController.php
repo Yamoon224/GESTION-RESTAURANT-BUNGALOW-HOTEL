@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\Order;
+use App\Services\OrderSyncService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -32,26 +33,12 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, OrderSyncService $orderSyncService)
     {
         $data = $request->except('_token');
 
-        $data['order']['ref'] = "BH-" .date('His');
-        $data['order']['created_by'] = $data['order']['updated_by'] = auth()->id();
-        $order = Order::create( $data['order'] );
+        $order = $orderSyncService->create($data, auth()->id());
 
-        foreach ($data['product_id'] as $key => $item) {
-            $details = OrderDetail::create([
-                'qty' => $data['qty'][$key],
-                'price' => $data['price'][$key],
-                'amount' => $data['amount'][$key],
-                'product_id' => $item,
-                'order_id' => $order->id,
-                'created_by' => auth()->id(),
-                'updated_by' => auth()->id()
-            ]);
-            $details->product->update(['qty'=>$details->product->qty - $data['qty'][$key]]);
-        }
         return back()->with(['message'=>__('locale.save', ['param'=>__('locale.order', ['suffix'=>'', 'prefix'=>''])." | ".__('locale.ref').":".$order->ref])]);
     }
 
