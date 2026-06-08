@@ -31,4 +31,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'sync_api' => [
+        'token' => env('SYNC_API_TOKEN'),
+    ],
+
+    'order_webhook' => [
+        'url' => env('ORDER_WEBHOOK_URL'),
+        'timeout' => env('ORDER_WEBHOOK_TIMEOUT', 10),
+    ],
+
 ];

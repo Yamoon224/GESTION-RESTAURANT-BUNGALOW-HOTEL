@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Documentation API Synchronisation</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../docs/css/theme-default.style.css" media="screen">
+    <link rel="stylesheet" href="../docs/css/theme-default.print.css" media="print">
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+    <style id="language-style">
+        /* starts out as display none and is replaced with js later  */
+                    body .content .bash-example code { display: none; }
+                    body .content .javascript-example code { display: none; }
+                    body .content .php-example code { display: none; }
+            </style>
+
+
+    <script src="../docs/js/theme-default-4.38.0.js"></script>
+
+</head>
+
+<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;,&quot;php&quot;]">
+
+<a href="#" id="nav-button">
+    <span>
+        MENU
+        <img src="../docs/images/navbar.png" alt="navbar-image"/>
+    </span>
+</a>
+<div class="tocify-wrapper">
+    
+            <div class="lang-selector">
+                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                            <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                                            <button type="button" class="lang-button" data-language-name="php">php</button>
+                    </div>
+    
+    <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+    </div>
+
+    <div id="toc">
+                    <ul id="tocify-header-introduction" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="introduction">
+                    <a href="#introduction">Introduction</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-authenticating-requests" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="authenticating-requests">
+                    <a href="#authenticating-requests">Authenticating requests</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-synchronisation-produits" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="synchronisation-produits">
+                    <a href="#synchronisation-produits">Synchronisation Produits</a>
+                </li>
+                                    <ul id="tocify-subheader-synchronisation-produits" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="synchronisation-produits-GETapi-sync-products">
+                                <a href="#synchronisation-produits-GETapi-sync-products">Lister les produits synchronisables.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="synchronisation-produits-GETapi-sync-products--product_id-">
+                                <a href="#synchronisation-produits-GETapi-sync-products--product_id-">Afficher un produit synchronisable.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-synchronisation-commandes" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="synchronisation-commandes">
+                    <a href="#synchronisation-commandes">Synchronisation Commandes</a>
+                </li>
+                                    <ul id="tocify-subheader-synchronisation-commandes" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="synchronisation-commandes-GETapi-sync-orders">
+                                <a href="#synchronisation-commandes-GETapi-sync-orders">Lister les commandes synchronisables.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="synchronisation-commandes-GETapi-sync-orders--order_id-">
+                                <a href="#synchronisation-commandes-GETapi-sync-orders--order_id-">Afficher une commande synchronisable.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+            </div>
+
+    <ul class="toc-footer" id="toc-footer">
+                    <li style="padding-bottom: 5px;"><a href="../docs/collection.json">View Postman collection</a></li>
+                            <li style="padding-bottom: 5px;"><a href="../docs/openapi.yaml">View OpenAPI spec</a></li>
+                <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+    </ul>
+
+    <ul class="toc-footer" id="last-updated">
+        <li>Derniere generation: 08/06/2026 09:57</li>
+    </ul>
+</div>
+
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id="introduction">Introduction</h1>
+<p>API de synchronisation des produits et des commandes pour le systeme externe.</p>
+<aside>
+    <strong>Base URL</strong>: <code>http://localhost</code>
+</aside>
+<p>Cette documentation couvre les endpoints de synchronisation exposes par l'application.</p>
+<p>Tous les endpoints necessitent un jeton defini dans <code>SYNC_API_TOKEN</code>.</p>
+
+        <h1 id="authenticating-requests">Authenticating requests</h1>
+<p>To authenticate requests, include an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_SYNC_API_TOKEN}"</code></strong>.</p>
+<p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
+<p>Envoyez le jeton dans le header <code>Authorization: Bearer {token}</code> ou via <code>X-Api-Token</code>.</p>
+
+        <h1 id="synchronisation-produits">Synchronisation Produits</h1>
+
+    
+
+                                <h2 id="synchronisation-produits-GETapi-sync-products">Lister les produits synchronisables.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Retourne la liste paginee des produits avec leur categorie et leurs details.</p>
+
+<span id="example-requests-GETapi-sync-products">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/sync/products?page=1" \
+    --header "Authorization: Bearer {SYNC_API_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/sync/products"
+);
+
+const params = {
+    "page": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {SYNC_API_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/sync/products';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {SYNC_API_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page' =&gt; '1',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-sync-products">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 15,
+            &quot;name&quot;: &quot;Poulet braise&quot;,
+            &quot;price&quot;: 4500,
+            &quot;qty&quot;: 25,
+            &quot;status&quot;: 1,
+            &quot;img&quot;: &quot;images/products/poulet.png&quot;,
+            &quot;category_id&quot;: 3,
+            &quot;category&quot;: {
+                &quot;id&quot;: 3,
+                &quot;name&quot;: &quot;Plats&quot;
+            },
+            &quot;product_details&quot;: [
+                {
+                    &quot;id&quot;: 1,
+                    &quot;qty&quot;: 1,
+                    &quot;price&quot;: 1000,
+                    &quot;amount&quot;: 1000,
+                    &quot;ingredient_id&quot;: 7,
+                    &quot;created_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;
+                }
+            ],
+            &quot;created_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;http://localhost/api/sync/products?page=1&quot;,
+        &quot;last&quot;: &quot;http://localhost/api/sync/products?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;path&quot;: &quot;http://localhost/api/sync/products&quot;,
+        &quot;per_page&quot;: 50,
+        &quot;to&quot;: 1,
+        &quot;total&quot;: 1
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-sync-products" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-sync-products"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-sync-products"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-sync-products" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-sync-products">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-sync-products" data-method="GET"
+      data-path="api/sync/products"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-sync-products', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/sync/products</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-sync-products"
+               value="Bearer {SYNC_API_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {SYNC_API_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-sync-products"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-sync-products"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-sync-products"
+               value="1"
+               data-component="query">
+    <br>
+<p>Numero de page. Example: <code>1</code></p>
+            </div>
+                </form>
+
+                    <h2 id="synchronisation-produits-GETapi-sync-products--product_id-">Afficher un produit synchronisable.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Retourne le detail d'un produit avec sa categorie et ses details de composition.</p>
+
+<span id="example-requests-GETapi-sync-products--product_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/sync/products/17" \
+    --header "Authorization: Bearer {SYNC_API_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/sync/products/17"
+);
+
+const headers = {
+    "Authorization": "Bearer {SYNC_API_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/sync/products/17';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {SYNC_API_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-sync-products--product_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 15,
+        &quot;name&quot;: &quot;Poulet braise&quot;,
+        &quot;price&quot;: 4500,
+        &quot;qty&quot;: 25,
+        &quot;status&quot;: 1,
+        &quot;img&quot;: &quot;images/products/poulet.png&quot;,
+        &quot;category_id&quot;: 3,
+        &quot;category&quot;: {
+            &quot;id&quot;: 3,
+            &quot;name&quot;: &quot;Plats&quot;
+        },
+        &quot;product_details&quot;: [
+            {
+                &quot;id&quot;: 1,
+                &quot;qty&quot;: 1,
+                &quot;price&quot;: 1000,
+                &quot;amount&quot;: 1000,
+                &quot;ingredient_id&quot;: 7,
+                &quot;created_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;
+            }
+        ],
+        &quot;created_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-sync-products--product_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-sync-products--product_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-sync-products--product_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-sync-products--product_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-sync-products--product_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-sync-products--product_id-" data-method="GET"
+      data-path="api/sync/products/{product_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-sync-products--product_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/sync/products/{product_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-sync-products--product_id-"
+               value="Bearer {SYNC_API_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {SYNC_API_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-sync-products--product_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-sync-products--product_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>product_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="product_id"                data-endpoint="GETapi-sync-products--product_id-"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the product. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>product</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="product"                data-endpoint="GETapi-sync-products--product_id-"
+               value="15"
+               data-component="url">
+    <br>
+<p>ID du produit. Example: <code>15</code></p>
+            </div>
+                    </form>
+
+                <h1 id="synchronisation-commandes">Synchronisation Commandes</h1>
+
+    
+
+                                <h2 id="synchronisation-commandes-GETapi-sync-orders">Lister les commandes synchronisables.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Retourne la liste paginee des commandes avec leur createur, leur modificateur et leurs lignes.</p>
+
+<span id="example-requests-GETapi-sync-orders">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/sync/orders?page=1" \
+    --header "Authorization: Bearer {SYNC_API_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/sync/orders"
+);
+
+const params = {
+    "page": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {SYNC_API_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/sync/orders';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {SYNC_API_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page' =&gt; '1',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-sync-orders">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 10,
+            &quot;ref&quot;: &quot;BH-120501&quot;,
+            &quot;amount&quot;: 13500,
+            &quot;description&quot;: &quot;Commande salle&quot;,
+            &quot;created_by&quot;: 1,
+            &quot;updated_by&quot;: 1,
+            &quot;created_at&quot;: &quot;2026-06-08T12:05:01.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-06-08T12:05:01.000000Z&quot;,
+            &quot;creator&quot;: {
+                &quot;id&quot;: 1,
+                &quot;name&quot;: &quot;Admin&quot;,
+                &quot;email&quot;: &quot;admin@example.com&quot;
+            },
+            &quot;updator&quot;: {
+                &quot;id&quot;: 1,
+                &quot;name&quot;: &quot;Admin&quot;,
+                &quot;email&quot;: &quot;admin@example.com&quot;
+            },
+            &quot;order_details&quot;: [
+                {
+                    &quot;id&quot;: 21,
+                    &quot;qty&quot;: 3,
+                    &quot;price&quot;: 4500,
+                    &quot;amount&quot;: 13500,
+                    &quot;product_id&quot;: 15,
+                    &quot;product&quot;: {
+                        &quot;id&quot;: 15,
+                        &quot;name&quot;: &quot;Poulet braise&quot;,
+                        &quot;price&quot;: 4500,
+                        &quot;qty&quot;: 25,
+                        &quot;status&quot;: 1,
+                        &quot;img&quot;: &quot;images/products/poulet.png&quot;,
+                        &quot;category_id&quot;: 3,
+                        &quot;category&quot;: {
+                            &quot;id&quot;: 3,
+                            &quot;name&quot;: &quot;Plats&quot;
+                        },
+                        &quot;product_details&quot;: [],
+                        &quot;created_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;,
+                        &quot;updated_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;
+                    },
+                    &quot;created_at&quot;: &quot;2026-06-08T12:05:01.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-08T12:05:01.000000Z&quot;
+                }
+            ]
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-sync-orders" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-sync-orders"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-sync-orders"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-sync-orders" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-sync-orders">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-sync-orders" data-method="GET"
+      data-path="api/sync/orders"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-sync-orders', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/sync/orders</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-sync-orders"
+               value="Bearer {SYNC_API_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {SYNC_API_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-sync-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-sync-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-sync-orders"
+               value="1"
+               data-component="query">
+    <br>
+<p>Numero de page. Example: <code>1</code></p>
+            </div>
+                </form>
+
+                    <h2 id="synchronisation-commandes-GETapi-sync-orders--order_id-">Afficher une commande synchronisable.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Retourne le detail complet d'une commande avec les lignes et produits associes.</p>
+
+<span id="example-requests-GETapi-sync-orders--order_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/sync/orders/17" \
+    --header "Authorization: Bearer {SYNC_API_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/sync/orders/17"
+);
+
+const headers = {
+    "Authorization": "Bearer {SYNC_API_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://localhost/api/sync/orders/17';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {SYNC_API_TOKEN}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-sync-orders--order_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 10,
+        &quot;ref&quot;: &quot;BH-120501&quot;,
+        &quot;amount&quot;: 13500,
+        &quot;description&quot;: &quot;Commande salle&quot;,
+        &quot;created_by&quot;: 1,
+        &quot;updated_by&quot;: 1,
+        &quot;created_at&quot;: &quot;2026-06-08T12:05:01.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-06-08T12:05:01.000000Z&quot;,
+        &quot;creator&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Admin&quot;,
+            &quot;email&quot;: &quot;admin@example.com&quot;
+        },
+        &quot;updator&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Admin&quot;,
+            &quot;email&quot;: &quot;admin@example.com&quot;
+        },
+        &quot;order_details&quot;: [
+            {
+                &quot;id&quot;: 21,
+                &quot;qty&quot;: 3,
+                &quot;price&quot;: 4500,
+                &quot;amount&quot;: 13500,
+                &quot;product_id&quot;: 15,
+                &quot;product&quot;: {
+                    &quot;id&quot;: 15,
+                    &quot;name&quot;: &quot;Poulet braise&quot;,
+                    &quot;price&quot;: 4500,
+                    &quot;qty&quot;: 25,
+                    &quot;status&quot;: 1,
+                    &quot;img&quot;: &quot;images/products/poulet.png&quot;,
+                    &quot;category_id&quot;: 3,
+                    &quot;category&quot;: {
+                        &quot;id&quot;: 3,
+                        &quot;name&quot;: &quot;Plats&quot;
+                    },
+                    &quot;product_details&quot;: [],
+                    &quot;created_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-06-08T12:00:00.000000Z&quot;
+                },
+                &quot;created_at&quot;: &quot;2026-06-08T12:05:01.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-06-08T12:05:01.000000Z&quot;
+            }
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-sync-orders--order_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-sync-orders--order_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-sync-orders--order_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-sync-orders--order_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-sync-orders--order_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-sync-orders--order_id-" data-method="GET"
+      data-path="api/sync/orders/{order_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-sync-orders--order_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/sync/orders/{order_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-sync-orders--order_id-"
+               value="Bearer {SYNC_API_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {SYNC_API_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-sync-orders--order_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-sync-orders--order_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>order_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="order_id"                data-endpoint="GETapi-sync-orders--order_id-"
+               value="17"
+               data-component="url">
+    <br>
+<p>The ID of the order. Example: <code>17</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>order</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="order"                data-endpoint="GETapi-sync-orders--order_id-"
+               value="10"
+               data-component="url">
+    <br>
+<p>ID de la commande. Example: <code>10</code></p>
+            </div>
+                    </form>
+
+            
+
+        
+    </div>
+    <div class="dark-box">
+                    <div class="lang-selector">
+                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                                        <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                                                        <button type="button" class="lang-button" data-language-name="php">php</button>
+                            </div>
+            </div>
+</div>
+</body>
+</html>

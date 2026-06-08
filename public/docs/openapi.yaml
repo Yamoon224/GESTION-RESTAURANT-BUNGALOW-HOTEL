@@ -1,0 +1,823 @@
+openapi: 3.0.3
+info:
+  title: 'Documentation API Synchronisation'
+  description: 'API de synchronisation des produits et des commandes pour le systeme externe.'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/sync/products:
+    get:
+      summary: 'Lister les produits synchronisables.'
+      operationId: listerLesProduitsSynchronisables
+      description: 'Retourne la liste paginee des produits avec leur categorie et leurs details.'
+      parameters:
+        -
+          in: query
+          name: page
+          description: 'Numero de page.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Numero de page.'
+            example: 1
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 15
+                      name: 'Poulet braise'
+                      price: 4500
+                      qty: 25
+                      status: 1
+                      img: images/products/poulet.png
+                      category_id: 3
+                      category:
+                        id: 3
+                        name: Plats
+                      product_details:
+                        -
+                          id: 1
+                          qty: 1
+                          price: 1000
+                          amount: 1000
+                          ingredient_id: 7
+                          created_at: '2026-06-08T12:00:00.000000Z'
+                          updated_at: '2026-06-08T12:00:00.000000Z'
+                      created_at: '2026-06-08T12:00:00.000000Z'
+                      updated_at: '2026-06-08T12:00:00.000000Z'
+                  links:
+                    first: 'http://localhost/api/sync/products?page=1'
+                    last: 'http://localhost/api/sync/products?page=1'
+                    prev: null
+                    next: null
+                  meta:
+                    current_page: 1
+                    from: 1
+                    last_page: 1
+                    path: 'http://localhost/api/sync/products'
+                    per_page: 50
+                    to: 1
+                    total: 1
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 15
+                        name: 'Poulet braise'
+                        price: 4500
+                        qty: 25
+                        status: 1
+                        img: images/products/poulet.png
+                        category_id: 3
+                        category:
+                          id: 3
+                          name: Plats
+                        product_details:
+                          -
+                            id: 1
+                            qty: 1
+                            price: 1000
+                            amount: 1000
+                            ingredient_id: 7
+                            created_at: '2026-06-08T12:00:00.000000Z'
+                            updated_at: '2026-06-08T12:00:00.000000Z'
+                        created_at: '2026-06-08T12:00:00.000000Z'
+                        updated_at: '2026-06-08T12:00:00.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 15
+                        name:
+                          type: string
+                          example: 'Poulet braise'
+                        price:
+                          type: integer
+                          example: 4500
+                        qty:
+                          type: integer
+                          example: 25
+                        status:
+                          type: integer
+                          example: 1
+                        img:
+                          type: string
+                          example: images/products/poulet.png
+                        category_id:
+                          type: integer
+                          example: 3
+                        category:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 3
+                            name:
+                              type: string
+                              example: Plats
+                        product_details:
+                          type: array
+                          example:
+                            -
+                              id: 1
+                              qty: 1
+                              price: 1000
+                              amount: 1000
+                              ingredient_id: 7
+                              created_at: '2026-06-08T12:00:00.000000Z'
+                              updated_at: '2026-06-08T12:00:00.000000Z'
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 1
+                              qty:
+                                type: integer
+                                example: 1
+                              price:
+                                type: integer
+                                example: 1000
+                              amount:
+                                type: integer
+                                example: 1000
+                              ingredient_id:
+                                type: integer
+                                example: 7
+                              created_at:
+                                type: string
+                                example: '2026-06-08T12:00:00.000000Z'
+                              updated_at:
+                                type: string
+                                example: '2026-06-08T12:00:00.000000Z'
+                        created_at:
+                          type: string
+                          example: '2026-06-08T12:00:00.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2026-06-08T12:00:00.000000Z'
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type: string
+                        example: 'http://localhost/api/sync/products?page=1'
+                      last:
+                        type: string
+                        example: 'http://localhost/api/sync/products?page=1'
+                      prev:
+                        type: string
+                        example: null
+                      next:
+                        type: string
+                        example: null
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      from:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      path:
+                        type: string
+                        example: 'http://localhost/api/sync/products'
+                      per_page:
+                        type: integer
+                        example: 50
+                      to:
+                        type: integer
+                        example: 1
+                      total:
+                        type: integer
+                        example: 1
+      tags:
+        - 'Synchronisation Produits'
+  '/api/sync/products/{product_id}':
+    get:
+      summary: 'Afficher un produit synchronisable.'
+      operationId: afficherUnProduitSynchronisable
+      description: "Retourne le detail d'un produit avec sa categorie et ses details de composition."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 15
+                    name: 'Poulet braise'
+                    price: 4500
+                    qty: 25
+                    status: 1
+                    img: images/products/poulet.png
+                    category_id: 3
+                    category:
+                      id: 3
+                      name: Plats
+                    product_details:
+                      -
+                        id: 1
+                        qty: 1
+                        price: 1000
+                        amount: 1000
+                        ingredient_id: 7
+                        created_at: '2026-06-08T12:00:00.000000Z'
+                        updated_at: '2026-06-08T12:00:00.000000Z'
+                    created_at: '2026-06-08T12:00:00.000000Z'
+                    updated_at: '2026-06-08T12:00:00.000000Z'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 15
+                      name:
+                        type: string
+                        example: 'Poulet braise'
+                      price:
+                        type: integer
+                        example: 4500
+                      qty:
+                        type: integer
+                        example: 25
+                      status:
+                        type: integer
+                        example: 1
+                      img:
+                        type: string
+                        example: images/products/poulet.png
+                      category_id:
+                        type: integer
+                        example: 3
+                      category:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 3
+                          name:
+                            type: string
+                            example: Plats
+                      product_details:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            qty: 1
+                            price: 1000
+                            amount: 1000
+                            ingredient_id: 7
+                            created_at: '2026-06-08T12:00:00.000000Z'
+                            updated_at: '2026-06-08T12:00:00.000000Z'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            qty:
+                              type: integer
+                              example: 1
+                            price:
+                              type: integer
+                              example: 1000
+                            amount:
+                              type: integer
+                              example: 1000
+                            ingredient_id:
+                              type: integer
+                              example: 7
+                            created_at:
+                              type: string
+                              example: '2026-06-08T12:00:00.000000Z'
+                            updated_at:
+                              type: string
+                              example: '2026-06-08T12:00:00.000000Z'
+                      created_at:
+                        type: string
+                        example: '2026-06-08T12:00:00.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2026-06-08T12:00:00.000000Z'
+      tags:
+        - 'Synchronisation Produits'
+    parameters:
+      -
+        in: path
+        name: product_id
+        description: 'The ID of the product.'
+        example: 17
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: product
+        description: 'ID du produit.'
+        example: 15
+        required: true
+        schema:
+          type: integer
+  /api/sync/orders:
+    get:
+      summary: 'Lister les commandes synchronisables.'
+      operationId: listerLesCommandesSynchronisables
+      description: 'Retourne la liste paginee des commandes avec leur createur, leur modificateur et leurs lignes.'
+      parameters:
+        -
+          in: query
+          name: page
+          description: 'Numero de page.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Numero de page.'
+            example: 1
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 10
+                      ref: BH-120501
+                      amount: 13500
+                      description: 'Commande salle'
+                      created_by: 1
+                      updated_by: 1
+                      created_at: '2026-06-08T12:05:01.000000Z'
+                      updated_at: '2026-06-08T12:05:01.000000Z'
+                      creator:
+                        id: 1
+                        name: Admin
+                        email: admin@example.com
+                      updator:
+                        id: 1
+                        name: Admin
+                        email: admin@example.com
+                      order_details:
+                        -
+                          id: 21
+                          qty: 3
+                          price: 4500
+                          amount: 13500
+                          product_id: 15
+                          product:
+                            id: 15
+                            name: 'Poulet braise'
+                            price: 4500
+                            qty: 25
+                            status: 1
+                            img: images/products/poulet.png
+                            category_id: 3
+                            category:
+                              id: 3
+                              name: Plats
+                            product_details: []
+                            created_at: '2026-06-08T12:00:00.000000Z'
+                            updated_at: '2026-06-08T12:00:00.000000Z'
+                          created_at: '2026-06-08T12:05:01.000000Z'
+                          updated_at: '2026-06-08T12:05:01.000000Z'
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 10
+                        ref: BH-120501
+                        amount: 13500
+                        description: 'Commande salle'
+                        created_by: 1
+                        updated_by: 1
+                        created_at: '2026-06-08T12:05:01.000000Z'
+                        updated_at: '2026-06-08T12:05:01.000000Z'
+                        creator:
+                          id: 1
+                          name: Admin
+                          email: admin@example.com
+                        updator:
+                          id: 1
+                          name: Admin
+                          email: admin@example.com
+                        order_details:
+                          -
+                            id: 21
+                            qty: 3
+                            price: 4500
+                            amount: 13500
+                            product_id: 15
+                            product:
+                              id: 15
+                              name: 'Poulet braise'
+                              price: 4500
+                              qty: 25
+                              status: 1
+                              img: images/products/poulet.png
+                              category_id: 3
+                              category:
+                                id: 3
+                                name: Plats
+                              product_details: []
+                              created_at: '2026-06-08T12:00:00.000000Z'
+                              updated_at: '2026-06-08T12:00:00.000000Z'
+                            created_at: '2026-06-08T12:05:01.000000Z'
+                            updated_at: '2026-06-08T12:05:01.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 10
+                        ref:
+                          type: string
+                          example: BH-120501
+                        amount:
+                          type: integer
+                          example: 13500
+                        description:
+                          type: string
+                          example: 'Commande salle'
+                        created_by:
+                          type: integer
+                          example: 1
+                        updated_by:
+                          type: integer
+                          example: 1
+                        created_at:
+                          type: string
+                          example: '2026-06-08T12:05:01.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2026-06-08T12:05:01.000000Z'
+                        creator:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Admin
+                            email:
+                              type: string
+                              example: admin@example.com
+                        updator:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: Admin
+                            email:
+                              type: string
+                              example: admin@example.com
+                        order_details:
+                          type: array
+                          example:
+                            -
+                              id: 21
+                              qty: 3
+                              price: 4500
+                              amount: 13500
+                              product_id: 15
+                              product:
+                                id: 15
+                                name: 'Poulet braise'
+                                price: 4500
+                                qty: 25
+                                status: 1
+                                img: images/products/poulet.png
+                                category_id: 3
+                                category:
+                                  id: 3
+                                  name: Plats
+                                product_details: []
+                                created_at: '2026-06-08T12:00:00.000000Z'
+                                updated_at: '2026-06-08T12:00:00.000000Z'
+                              created_at: '2026-06-08T12:05:01.000000Z'
+                              updated_at: '2026-06-08T12:05:01.000000Z'
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 21
+                              qty:
+                                type: integer
+                                example: 3
+                              price:
+                                type: integer
+                                example: 4500
+                              amount:
+                                type: integer
+                                example: 13500
+                              product_id:
+                                type: integer
+                                example: 15
+                              product:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                    example: 15
+                                  name:
+                                    type: string
+                                    example: 'Poulet braise'
+                                  price:
+                                    type: integer
+                                    example: 4500
+                                  qty:
+                                    type: integer
+                                    example: 25
+                                  status:
+                                    type: integer
+                                    example: 1
+                                  img:
+                                    type: string
+                                    example: images/products/poulet.png
+                                  category_id:
+                                    type: integer
+                                    example: 3
+                                  category:
+                                    type: object
+                                    properties:
+                                      id: { type: integer, example: 3 }
+                                      name: { type: string, example: Plats }
+                                  product_details:
+                                    type: array
+                                    example: []
+                                  created_at:
+                                    type: string
+                                    example: '2026-06-08T12:00:00.000000Z'
+                                  updated_at:
+                                    type: string
+                                    example: '2026-06-08T12:00:00.000000Z'
+                              created_at:
+                                type: string
+                                example: '2026-06-08T12:05:01.000000Z'
+                              updated_at:
+                                type: string
+                                example: '2026-06-08T12:05:01.000000Z'
+      tags:
+        - 'Synchronisation Commandes'
+  '/api/sync/orders/{order_id}':
+    get:
+      summary: 'Afficher une commande synchronisable.'
+      operationId: afficherUneCommandeSynchronisable
+      description: "Retourne le detail complet d'une commande avec les lignes et produits associes."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 10
+                    ref: BH-120501
+                    amount: 13500
+                    description: 'Commande salle'
+                    created_by: 1
+                    updated_by: 1
+                    created_at: '2026-06-08T12:05:01.000000Z'
+                    updated_at: '2026-06-08T12:05:01.000000Z'
+                    creator:
+                      id: 1
+                      name: Admin
+                      email: admin@example.com
+                    updator:
+                      id: 1
+                      name: Admin
+                      email: admin@example.com
+                    order_details:
+                      -
+                        id: 21
+                        qty: 3
+                        price: 4500
+                        amount: 13500
+                        product_id: 15
+                        product:
+                          id: 15
+                          name: 'Poulet braise'
+                          price: 4500
+                          qty: 25
+                          status: 1
+                          img: images/products/poulet.png
+                          category_id: 3
+                          category:
+                            id: 3
+                            name: Plats
+                          product_details: []
+                          created_at: '2026-06-08T12:00:00.000000Z'
+                          updated_at: '2026-06-08T12:00:00.000000Z'
+                        created_at: '2026-06-08T12:05:01.000000Z'
+                        updated_at: '2026-06-08T12:05:01.000000Z'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 10
+                      ref:
+                        type: string
+                        example: BH-120501
+                      amount:
+                        type: integer
+                        example: 13500
+                      description:
+                        type: string
+                        example: 'Commande salle'
+                      created_by:
+                        type: integer
+                        example: 1
+                      updated_by:
+                        type: integer
+                        example: 1
+                      created_at:
+                        type: string
+                        example: '2026-06-08T12:05:01.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2026-06-08T12:05:01.000000Z'
+                      creator:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Admin
+                          email:
+                            type: string
+                            example: admin@example.com
+                      updator:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Admin
+                          email:
+                            type: string
+                            example: admin@example.com
+                      order_details:
+                        type: array
+                        example:
+                          -
+                            id: 21
+                            qty: 3
+                            price: 4500
+                            amount: 13500
+                            product_id: 15
+                            product:
+                              id: 15
+                              name: 'Poulet braise'
+                              price: 4500
+                              qty: 25
+                              status: 1
+                              img: images/products/poulet.png
+                              category_id: 3
+                              category:
+                                id: 3
+                                name: Plats
+                              product_details: []
+                              created_at: '2026-06-08T12:00:00.000000Z'
+                              updated_at: '2026-06-08T12:00:00.000000Z'
+                            created_at: '2026-06-08T12:05:01.000000Z'
+                            updated_at: '2026-06-08T12:05:01.000000Z'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 21
+                            qty:
+                              type: integer
+                              example: 3
+                            price:
+                              type: integer
+                              example: 4500
+                            amount:
+                              type: integer
+                              example: 13500
+                            product_id:
+                              type: integer
+                              example: 15
+                            product:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 15
+                                name:
+                                  type: string
+                                  example: 'Poulet braise'
+                                price:
+                                  type: integer
+                                  example: 4500
+                                qty:
+                                  type: integer
+                                  example: 25
+                                status:
+                                  type: integer
+                                  example: 1
+                                img:
+                                  type: string
+                                  example: images/products/poulet.png
+                                category_id:
+                                  type: integer
+                                  example: 3
+                                category:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      example: 3
+                                    name:
+                                      type: string
+                                      example: Plats
+                                product_details:
+                                  type: array
+                                  example: []
+                                created_at:
+                                  type: string
+                                  example: '2026-06-08T12:00:00.000000Z'
+                                updated_at:
+                                  type: string
+                                  example: '2026-06-08T12:00:00.000000Z'
+                            created_at:
+                              type: string
+                              example: '2026-06-08T12:05:01.000000Z'
+                            updated_at:
+                              type: string
+                              example: '2026-06-08T12:05:01.000000Z'
+      tags:
+        - 'Synchronisation Commandes'
+    parameters:
+      -
+        in: path
+        name: order_id
+        description: 'The ID of the order.'
+        example: 17
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: order
+        description: 'ID de la commande.'
+        example: 10
+        required: true
+        schema:
+          type: integer
+tags:
+  -
+    name: 'Synchronisation Produits'
+    description: ''
+  -
+    name: 'Synchronisation Commandes'
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'Envoyez le jeton dans le header `Authorization: Bearer {token}` ou via `X-Api-Token`.'
+security:
+  -
+    default: []

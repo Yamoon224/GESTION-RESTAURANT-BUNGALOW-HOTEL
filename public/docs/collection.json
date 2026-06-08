@@ -1,0 +1,210 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost"
+        }
+    ],
+    "info": {
+        "name": "Documentation API Synchronisation",
+        "_postman_id": "961f942b-a08e-4430-80ca-71c67c46430e",
+        "description": "API de synchronisation des produits et des commandes pour le systeme externe.",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Synchronisation Produits",
+            "description": "",
+            "item": [
+                {
+                    "name": "Lister les produits synchronisables.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sync\/products",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numero de page.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/sync\/products?page=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retourne la liste paginee des produits avec leur categorie et leurs details."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": [\n    {\n      \"id\": 15,\n      \"name\": \"Poulet braise\",\n      \"price\": 4500,\n      \"qty\": 25,\n      \"status\": 1,\n      \"img\": \"images\/products\/poulet.png\",\n      \"category_id\": 3,\n      \"category\": {\n        \"id\": 3,\n        \"name\": \"Plats\"\n      },\n      \"product_details\": [\n        {\n          \"id\": 1,\n          \"qty\": 1,\n          \"price\": 1000,\n          \"amount\": 1000,\n          \"ingredient_id\": 7,\n          \"created_at\": \"2026-06-08T12:00:00.000000Z\",\n          \"updated_at\": \"2026-06-08T12:00:00.000000Z\"\n        }\n      ],\n      \"created_at\": \"2026-06-08T12:00:00.000000Z\",\n      \"updated_at\": \"2026-06-08T12:00:00.000000Z\"\n    }\n  ],\n  \"links\": {\n    \"first\": \"http:\/\/localhost\/api\/sync\/products?page=1\",\n    \"last\": \"http:\/\/localhost\/api\/sync\/products?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"path\": \"http:\/\/localhost\/api\/sync\/products\",\n    \"per_page\": 50,\n    \"to\": 1,\n    \"total\": 1\n  }\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Afficher un produit synchronisable.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sync\/products\/:product_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sync\/products\/:product_id",
+                            "variable": [
+                                {
+                                    "id": "product_id",
+                                    "key": "product_id",
+                                    "value": "17",
+                                    "description": "The ID of the product."
+                                },
+                                {
+                                    "id": "product",
+                                    "key": "product",
+                                    "value": "15",
+                                    "description": "ID du produit."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retourne le detail d'un produit avec sa categorie et ses details de composition."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": {\n    \"id\": 15,\n    \"name\": \"Poulet braise\",\n    \"price\": 4500,\n    \"qty\": 25,\n    \"status\": 1,\n    \"img\": \"images\/products\/poulet.png\",\n    \"category_id\": 3,\n    \"category\": {\n      \"id\": 3,\n      \"name\": \"Plats\"\n    },\n    \"product_details\": [\n      {\n        \"id\": 1,\n        \"qty\": 1,\n        \"price\": 1000,\n        \"amount\": 1000,\n        \"ingredient_id\": 7,\n        \"created_at\": \"2026-06-08T12:00:00.000000Z\",\n        \"updated_at\": \"2026-06-08T12:00:00.000000Z\"\n      }\n    ],\n    \"created_at\": \"2026-06-08T12:00:00.000000Z\",\n    \"updated_at\": \"2026-06-08T12:00:00.000000Z\"\n  }\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Synchronisation Commandes",
+            "description": "",
+            "item": [
+                {
+                    "name": "Lister les commandes synchronisables.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sync\/orders",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Numero de page.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/sync\/orders?page=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retourne la liste paginee des commandes avec leur createur, leur modificateur et leurs lignes."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": [\n    {\n      \"id\": 10,\n      \"ref\": \"BH-120501\",\n      \"amount\": 13500,\n      \"description\": \"Commande salle\",\n      \"created_by\": 1,\n      \"updated_by\": 1,\n      \"created_at\": \"2026-06-08T12:05:01.000000Z\",\n      \"updated_at\": \"2026-06-08T12:05:01.000000Z\",\n      \"creator\": {\n        \"id\": 1,\n        \"name\": \"Admin\",\n        \"email\": \"admin@example.com\"\n      },\n      \"updator\": {\n        \"id\": 1,\n        \"name\": \"Admin\",\n        \"email\": \"admin@example.com\"\n      },\n      \"order_details\": [\n        {\n          \"id\": 21,\n          \"qty\": 3,\n          \"price\": 4500,\n          \"amount\": 13500,\n          \"product_id\": 15,\n          \"product\": {\n            \"id\": 15,\n            \"name\": \"Poulet braise\",\n            \"price\": 4500,\n            \"qty\": 25,\n            \"status\": 1,\n            \"img\": \"images\/products\/poulet.png\",\n            \"category_id\": 3,\n            \"category\": {\n              \"id\": 3,\n              \"name\": \"Plats\"\n            },\n            \"product_details\": [],\n            \"created_at\": \"2026-06-08T12:00:00.000000Z\",\n            \"updated_at\": \"2026-06-08T12:00:00.000000Z\"\n          },\n          \"created_at\": \"2026-06-08T12:05:01.000000Z\",\n          \"updated_at\": \"2026-06-08T12:05:01.000000Z\"\n        }\n      ]\n    }\n  ]\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Afficher une commande synchronisable.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/sync\/orders\/:order_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/sync\/orders\/:order_id",
+                            "variable": [
+                                {
+                                    "id": "order_id",
+                                    "key": "order_id",
+                                    "value": "17",
+                                    "description": "The ID of the order."
+                                },
+                                {
+                                    "id": "order",
+                                    "key": "order",
+                                    "value": "10",
+                                    "description": "ID de la commande."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retourne le detail complet d'une commande avec les lignes et produits associes."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"data\": {\n    \"id\": 10,\n    \"ref\": \"BH-120501\",\n    \"amount\": 13500,\n    \"description\": \"Commande salle\",\n    \"created_by\": 1,\n    \"updated_by\": 1,\n    \"created_at\": \"2026-06-08T12:05:01.000000Z\",\n    \"updated_at\": \"2026-06-08T12:05:01.000000Z\",\n    \"creator\": {\n      \"id\": 1,\n      \"name\": \"Admin\",\n      \"email\": \"admin@example.com\"\n    },\n    \"updator\": {\n      \"id\": 1,\n      \"name\": \"Admin\",\n      \"email\": \"admin@example.com\"\n    },\n    \"order_details\": [\n      {\n        \"id\": 21,\n        \"qty\": 3,\n        \"price\": 4500,\n        \"amount\": 13500,\n        \"product_id\": 15,\n        \"product\": {\n          \"id\": 15,\n          \"name\": \"Poulet braise\",\n          \"price\": 4500,\n          \"qty\": 25,\n          \"status\": 1,\n          \"img\": \"images\/products\/poulet.png\",\n          \"category_id\": 3,\n          \"category\": {\n            \"id\": 3,\n            \"name\": \"Plats\"\n          },\n          \"product_details\": [],\n          \"created_at\": \"2026-06-08T12:00:00.000000Z\",\n          \"updated_at\": \"2026-06-08T12:00:00.000000Z\"\n        },\n        \"created_at\": \"2026-06-08T12:05:01.000000Z\",\n        \"updated_at\": \"2026-06-08T12:05:01.000000Z\"\n      }\n    ]\n  }\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "Authorization",
+                "type": "string"
+            }
+        ]
+    }
+}
