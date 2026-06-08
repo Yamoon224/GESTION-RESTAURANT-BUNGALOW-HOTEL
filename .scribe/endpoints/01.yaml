@@ -98,7 +98,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 
+      - 'Bearer XXXXXXXXXXXXXXXXXXXXXXXXXX'
     controller: null
     method: null
     route: null
