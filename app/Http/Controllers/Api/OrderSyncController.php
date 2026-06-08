@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\OrderResource;
 use App\Models\Order;
+use Illuminate\Http\Request;
 
 class OrderSyncController extends Controller
 {
@@ -17,6 +18,7 @@ class OrderSyncController extends Controller
      * @authenticated
      * @header Authorization Bearer {SYNC_API_TOKEN}
      * @queryParam page integer Numero de page. Example: 1
+    * @queryParam per_page integer Nombre d'elements par page (max 100). Example: 25
      *
      * @response 200 {
      *   "data": [
@@ -70,11 +72,15 @@ class OrderSyncController extends Controller
      *   ]
      * }
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = (int) $request->query('per_page', 50);
+        $perPage = max(1, min($perPage, 100));
+
         $orders = Order::with(['creator', 'updator', 'order_details.product.category'])
             ->orderByDesc('id')
-            ->paginate(50);
+            ->paginate($perPage)
+            ->appends($request->query());
 
         return OrderResource::collection($orders);
     }

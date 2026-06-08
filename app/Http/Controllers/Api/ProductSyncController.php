@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\ProductResource;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductSyncController extends Controller
 {
@@ -17,6 +18,7 @@ class ProductSyncController extends Controller
      * @authenticated
      * @header Authorization Bearer {SYNC_API_TOKEN}
      * @queryParam page integer Numero de page. Example: 1
+    * @queryParam per_page integer Nombre d'elements par page (max 100). Example: 25
      *
      * @response 200 {
      *   "data": [
@@ -64,11 +66,15 @@ class ProductSyncController extends Controller
      *   }
      * }
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = (int) $request->query('per_page', 50);
+        $perPage = max(1, min($perPage, 100));
+
         $products = Product::with(['category', 'product_details'])
             ->orderByDesc('id')
-            ->paginate(50);
+            ->paginate($perPage)
+            ->appends($request->query());
 
         return ProductResource::collection($products);
     }
@@ -117,15 +123,5 @@ class ProductSyncController extends Controller
         $product->load(['category', 'product_details']);
 
         return new ProductResource($product);
-        /**
-         * Afficher un produit
-         *
-         * Retourne le detail d'un produit avec sa categorie et ses composants.
-         *
-         * @group Synchronisation Produits
-         * @authenticated
-         * @header Authorization Bearer {SYNC_API_TOKEN}
-         * @urlParam product integer required Identifiant du produit. Example: 1
-         */
     }
 }
