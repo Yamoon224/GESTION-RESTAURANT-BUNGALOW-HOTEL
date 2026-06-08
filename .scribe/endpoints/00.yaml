@@ -92,7 +92,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer EsyYgr/q0qgyop1nX+SZNdTNctXxX1e6kbAVz64RLZQ='
+      - 'Bearer XXXXXXXXXXXXXXXXXXXXXXXXXX'
     controller: null
     method: null
     route: null
@@ -182,7 +182,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer EsyYgr/q0qgyop1nX+SZNdTNctXxX1e6kbAVz64RLZQ='
+      - 'Bearer XXXXXXXXXXXXXXXXXXXXXXXXXX'
     controller: null
     method: null
     route: null
