@@ -34,7 +34,7 @@
                                         <tbody>
                                             @foreach ($order->order_details as $item)
                                                 <tr>
-                                                    <td><td>{{ optional($item->product)->name ?? 'Produit supprimé' }}</td></td>
+                                                    <td>{{ optional($item->product)->name ?? 'Produit supprimé' }}</td>
                                                     <td>{{ $item->qty }}</td>
                                                     <td>{{ moneyFormat($item->price) }}</td>
                                                     <td>{{ moneyFormat($item->amount) }}</td>
